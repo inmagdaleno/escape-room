@@ -3,9 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Puzzle Drag & Drop</title>
-  <link rel="stylesheet" href="estilos.css" />
+  <title>Puzzle</title>
+  <link rel="stylesheet" href="estilos.css">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Barriecito&family=Barrio&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
 </head>
+
 <body>
   <!-- Botón para Volver Atrás -->
   <button id="btn-volver-atras" class="btn-volver-atras-estilo" onclick="history.back()">
@@ -19,11 +24,6 @@
     </button>
     <span class="button-label">ADELANTE</span>
   </div>
-
-  <!-- Botón para Pistas Extras -->
-  <button id="btn-pista-extra" class="btn-pista-extra-estilo">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
 
   <h1 id="main-title">El mapa de los Secretos</h1>
   <p id="subtitle">Reconstruye el mapa arrastrando las piezas hasta el tablero. Una vez terminado será desvelado donde se encuentran 4 de las claves necesarias para escapar de esta isla. !Pero corre, el tiempo se está acabando!</p>

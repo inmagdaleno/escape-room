@@ -158,18 +158,15 @@ body {
   background-position: center;
 }
 
+#pantalla-introduccion .modal-contenido{
+  width: 700px;
+  padding: 50px;
+}
+
 #pantalla-modo-juego {
   background-image: url('../img/atardecer.webp');
   background-size: cover;
   background-position: center;
-}
-
-#pantalla-introduccion .contenido h2 {
-  color: #f0f0f0;
-}
-
-#pantalla-introduccion .contenido p {
-  color: #f0f0f0;
 }
 
 #pantalla-bienvenida .contenido,
@@ -254,9 +251,55 @@ h2 {
   margin-bottom: 30px;
 }
 
+#escena-jungla {
+  background-image: url('../img/jungla.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+#escena-playa .contenido h2 {
+  color: #ffffff;
+  font-weight: 650;
+}
+
+#escena-playa .contenido p {
+  color: #ffffff;
+}
+
+#contenido-jungla {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
+  width: 80vw;
+  max-width: 1000px;
+  height: 260px;
+  background: rgba(255,255,255,0.18);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  z-index: 10;
+}
+
+#contenido-jungla button {
+  margin-top: 0px;
+  margin-bottom: 16px;
+}
+
+#contenido-jungla p {
+  margin-bottom: 20px;
+}
+
 .modal-contenido h2,
 .modal-contenido p {
-  color: #000000;
+  color: #ffffff;
   font-weight: 650;
 }
 
@@ -300,7 +343,28 @@ button:hover {
 }
 
 .modal-overlay {
-  z-index: 2000;
+  display: none;
+  position: fixed;
+  z-index: 2000; /* mayor que el modal1 */
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+.modal-overlay[style*="display: flex"] {
+  display: flex !important;
+}
+.modal-contenido {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2em;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+}
+.oculto {
+  display: none !important;
 }
 
 .modal-contenido {
@@ -330,6 +394,16 @@ button:hover {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+#modal-introduccion .modal-contenido p {
+  color: #ffffff;
+  line-height: 26px;
+}
+
+#modal-introduccion .modal-contenido h2 {
+  color: #ffffff;
+  font-size: 40px;
 }
 
 .pergamino-container {
@@ -430,7 +504,7 @@ button:hover {
 .btn-pista-extra-estilo {
   position: fixed;
   bottom: 30px;
-  right: 30px;
+  left: 30px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -485,6 +559,13 @@ button:hover {
   margin-top: 20px;
   width: 80%;
   max-width: 300px;
+}
+
+#modal-pista-imagen img{
+ width: 80%;
+ height: 70%;
+ margin-bottom: -20px;
+ margin-top: -20px;
 }
 
 .btn-pista-primario, .btn-pista-secundario {
@@ -572,7 +653,7 @@ button:hover {
 }
 
 .modal-contenido h2 {
-  color: #000000;
+  color: #e7fef6;
   font-family: "Barriecito";
-  font-size: 24px;
-}   
+  font-size: 32px;
+}

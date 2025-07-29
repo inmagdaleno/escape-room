@@ -297,12 +297,52 @@ document.addEventListener("DOMContentLoaded", () => {
       cerrarModalRanking.addEventListener('click', () => closeOverlayModal(modalRanking));
   }
 
-  // Event listener para btn-pista-extra-modal1
   const btnPistaExtraModal1 = document.getElementById('btn-pista-extra-modal1');
-  if (btnPistaExtraModal1) {
+  const modalPista = document.getElementById('modal-pista');
+  const cerrarModalPista = document.getElementById('cerrar-modal-pista');
+  const pistaExplicacion = document.getElementById('pista-explicacion');
+
+  if (btnPistaExtraModal1 && modalPista) {
     btnPistaExtraModal1.addEventListener('click', () => {
-      console.log('btnPistaExtraModal1 clicked. modalPista is:', window.modalPista);
-      window.openOverlayModal(window.modalPista);
+      // Cambia el mensaje según el modo de juego
+      if (window.gameMode === 'time') {
+        pistaExplicacion.textContent = 'Para este acertijo dispones de 1 pista extra. Pero su uso supondrá una penalización de 1 minuto en tu tiempo restante.';
+      } else {
+        pistaExplicacion.textContent = 'Para este acertijo dispones de 1 pista extra. Pero su uso supondrá una penalización de 20 puntos en tu puntuación.';
+      }
+      // Centrar y mostrar el modal de pista
+      modalPista.style.display = 'flex';
+      modalPista.classList.remove('oculto');
+      document.body.style.overflow = 'hidden';
+    });
+  }
+
+  if (cerrarModalPista && modalPista) {
+    cerrarModalPista.addEventListener('click', () => {
+      modalPista.style.display = 'none';
+      modalPista.classList.add('oculto');
+      document.body.style.overflow = '';
+    });
+  }
+
+  // Cerrar modal si se hace clic fuera del contenido
+  if (modalPista) {
+    modalPista.addEventListener('click', (e) => {
+      if (e.target === modalPista) {
+        modalPista.style.display = 'none';
+        modalPista.classList.add('oculto');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  const btnDescartarPista = document.getElementById('btn-descartar-pista');
+
+  if (btnDescartarPista && modalPista) {
+    btnDescartarPista.addEventListener('click', () => {
+      modalPista.style.display = 'none';
+      modalPista.classList.add('oculto');
+      document.body.style.overflow = '';
     });
   }
 
@@ -326,7 +366,11 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnComenzar) {
     btnComenzar.addEventListener("click", () => {
       console.log("Clic en 'Comenzar la aventura'");
-      cambiarPantalla(pantallaBienvenida, pantallaModoJuego);
+      // Redirigir directamente a la playa en modo puntuación por defecto
+      gameMode = 'score';
+      document.getElementById("score-container").style.display = "block";
+      document.getElementById("timer-container").style.display = "none";
+      cambiarPantalla(pantallaBienvenida, escenaPlaya);
     });
   }
 
@@ -369,4 +413,95 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Iniciar el juego por primera vez
   inicializarJuego();
+
+  const btnConfirmarPista = document.getElementById('btn-confirmar-pista');
+  const modalPistaImagen = document.getElementById('modal-pista-imagen');
+  const btnCerrarPistaImagen = document.getElementById('btn-cerrar-pista-imagen');
+  const cerrarModalPistaImagen = document.getElementById('cerrar-modal-pista-imagen');
+
+  if (btnConfirmarPista) {
+    btnConfirmarPista.addEventListener('click', () => {
+      // Penalización según el modo de juego
+      if (window.gameMode === 'time') {
+        // Restar 1 minuto (60 segundos)
+        window.timeLeft = Math.max(0, window.timeLeft - 60);
+        window.updateTimerDisplay && window.updateTimerDisplay();
+      } else if (window.gameMode === 'score') {
+        // Restar 20 puntos
+        window.score = Math.max(0, window.score - 20);
+        if (window.scoreDisplay) window.scoreDisplay.textContent = window.score;
+      }
+      // Puedes mostrar feedback si quieres
+      const feedbackPista = document.getElementById('feedback-pista');
+      if (feedbackPista) {
+        feedbackPista.textContent = '¡Has usado una pista! Se ha aplicado la penalización.';
+        feedbackPista.classList.remove('success', 'error');
+        feedbackPista.classList.add('warning');
+      }
+      // Cerrar el modal tras un breve retardo
+      setTimeout(() => {
+        const modalPista = document.getElementById('modal-pista');
+        if (modalPista) {
+          modalPista.style.display = 'none';
+          modalPista.classList.add('oculto');
+          document.body.style.overflow = '';
+        }
+        if (feedbackPista) feedbackPista.textContent = '';
+      }, 1200);
+      // Mostrar el modal de la imagen de pista extra
+      setTimeout(() => {
+        modalPistaImagen.style.display = 'flex';
+        modalPistaImagen.classList.remove('oculto');
+        document.body.style.overflow = 'hidden';
+      }, 1200); // tras mostrar el feedback y cerrar el modal anterior
+    });
+  }
+
+  function cerrarModalImagenPista() {
+    modalPistaImagen.style.display = 'none';
+    modalPistaImagen.classList.add('oculto');
+    document.body.style.overflow = '';
+  }
+
+  if (btnCerrarPistaImagen) {
+    btnCerrarPistaImagen.addEventListener('click', cerrarModalImagenPista);
+  }
+  if (cerrarModalPistaImagen) {
+    cerrarModalPistaImagen.addEventListener('click', cerrarModalImagenPista);
+  }
+  // Cerrar si se hace clic fuera del contenido
+  if (modalPistaImagen) {
+    modalPistaImagen.addEventListener('click', (e) => {
+      if (e.target === modalPistaImagen) cerrarModalImagenPista();
+    });
+  }
+
+  // Cambia la pantalla según el hash de la URL
+  function mostrarPantallaSegunHash() {
+    // Oculta todas las pantallas
+    document.querySelectorAll('.pantalla').forEach(sec => sec.classList.remove('visible'));
+    // Lee el hash
+    const hash = window.location.hash.replace('#', '');
+    // Busca la sección correspondiente
+    const seccion = document.getElementById(hash);
+    if (seccion) {
+      seccion.classList.add('visible');
+    } else {
+      // Si no existe, muestra la pantalla de bienvenida por defecto
+      document.getElementById('pantalla-bienvenida').classList.add('visible');
+    }
+  }
+
+  // Escucha cambios de hash y al cargar la página
+  window.addEventListener('DOMContentLoaded', mostrarPantallaSegunHash);
+  window.addEventListener('hashchange', mostrarPantallaSegunHash);
+
+  // Si vuelves de sudoku.html y pulsas "Continuar", cambia el hash y muestra la jungla
+  const btnContinuarSudoku = document.getElementById('btn-continuar-sudoku');
+  if (btnContinuarSudoku) {
+    btnContinuarSudoku.addEventListener('click', function() {
+      window.location.hash = 'escena-jungla';
+      mostrarPantallaSegunHash();
+    });
+  }
 });

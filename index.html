@@ -27,10 +27,6 @@
     </button>
   </div>
 
-    <!-- Botón para Pistas Extras -->
-  <button id="btn-pista-extra" class="btn-pista-extra-estilo">
-    <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
 
 
   <!-- Modal para Perfil de Usuario -->
@@ -132,10 +128,10 @@
       <div id="modal1" class="modal">
         <div class="modal-contenido">
           <img id="pergamino-img" src="img/pergamino1.webp" alt="Pergamino antiguo con un mensaje cifrado">
-          <span class="cerrar" id="cerrar-modal-puzzle1">&times;</span>
           <div class="pergamino-container">
+            <p>Hay 26 pasos en la arena pero si giras 13 todo cambia. <br> Lo que antes callaba...ahora habla</p>
             <input type="text" id="respuesta-puzzle1" placeholder="Introduce la respuesta" />
-            <button id="btn-resolver-puzzle1">Resolver</button>
+            <button id="btn-resolver-puzzle1" class="btn-resolver">Resolver</button>
             <div class="feedback"><p id="feedback-puzzle1"></p></div>
           </div>
           <button id="btn-pista-extra-modal1" class="btn-pista-extra-estilo-modal1">
@@ -145,12 +141,11 @@
 
       </div>
 
-  <!-- Modal para Pista Extra -->
-  <div id="modal-pista1" class="modal modal-overlay game-modal">
+  <!-- Modal para Pista Extra-->
+  <div id="modal-pista" class="modal-overlay oculto" style="display:none;">
     <div class="modal-contenido">
-      <span class="cerrar" id="cerrar-modal-pista">&times;</span>
       <h2>Pista Extra</h2>
-      <p id="pista-explicacion"></p>
+      <p id="pista-explicacion">Para este acertijo dispones de 1 pista extra. Pero su uso supondrá una penalización de 20 puntos en tu puntuación</p>
       <p id="feedback-pista" class="feedback"></p>
       <div class="modal-acciones">
         <button id="btn-confirmar-pista" class="btn-pista-primario btn-primary-gradient">Confirmar</button>
@@ -159,6 +154,17 @@
     </div>
   </div>
   </section>
+
+    <!-- Modal imagen de la pista extra -->
+<div id="modal-pista-imagen" class="modal-overlay oculto" style="display:none; z-index:3000;">
+  <div class="modal-contenido">
+    <h2>Pista Visual</h2>
+    <img id="img-pista-extra" src="img/pista1_2.webp" alt="Pista visual">
+    <div style="text-align:center;margin-top:1em;">
+      <button id="btn-cerrar-pista-imagen" class="btn-pista-primario btn-primary-gradient">Cerrar</button>
+    </div>
+  </div>
+</div>
 
    <!-- Pantalla Templo -->
       <section id="escena-templo" class="pantalla">
@@ -170,15 +176,26 @@
         </div>
       </section>
 
-      
+
       <!-- Pantalla Jungla-->
       <section id="escena-jungla" class="pantalla">
-        <div class="contenido">
+        <div class="contenido" id="contenido-jungla">
           <h2>La Jungla</h2>
-          <p>Has estado vagando sin rumbo fijo cuando de pronto… algo cambia. Frente a ti se alzan unos magestuosos árboles milenarios. Su presencia impone y su silencio incomoda... pero tienes la sensación de que intentan decirte algo. Tras ellos, un camino sombrío se adentra en la espesura de la jungla.
-          <p>A medida que avanzas, empiezas a encontrar símbolos, números y letras tallados en la corteza con un brillo inusual.  No los entiendes pero sientes que te están guiando.</p>
+          <p>Has estado vagando sin rumbo fijo cuando de pronto… algo cambia. Frente a ti se alzan unos magestuosos árboles milenarios. Su presencia impone y su silencio incomoda... pero tienes la sensación de que intentan decirte algo. Tras ellos, un camino sombrío se adentra en la espesura de la jungla. A medida que avanzas, empiezas a encontrar símbolos, números y letras tallados en la corteza con un brillo inusual.  No los entiendes pero sientes que te están guiando.</p>
+            <button id="ir-jungla">Adéntrate en la jungla</button>
         </div>
       </section>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const btnIrJungla = document.getElementById("ir-jungla");
+          if (btnIrJungla) {
+            btnIrJungla.addEventListener("click", () => {
+              window.location.href = "mapa/mapa.html";
+            });
+          }
+        });
+      </script>
 
       <!-- Pantalla Final -->
       <section id="pantalla-final" class="pantalla">

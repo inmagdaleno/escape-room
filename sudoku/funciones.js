@@ -928,11 +928,12 @@ function handleSolveButton() {
 }
 
 function iniciarResolucion() {
-  const table = document.getElementById("sudoku");
-  goldenCells.forEach(([r, c]) => {
-    const cell = table.rows[r].cells[c];
-    cell.classList.add("solved-gold");
-  });
+  if (verificar()) { // Solo si el tablero es correcto
+    animarGoldCells();
+  } else {
+    // Opcional: muestra un mensaje de error
+    mostrarMensaje('El tablero no está resuelto correctamente.');
+  }
 }
 
 function playSound(id) {

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Puzzle Drag & Drop</title>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+  <!-- Botón para Volver Atrás -->
+  <button id="btn-volver-atras" class="btn-volver-atras-estilo" onclick="history.back()">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <!-- Botón para Ir Adelante -->
+  <div class="button-group" id="group-ir-adelante">
+    <button id="btn-ir-adelante" class="btn-icono-esquina" title="Ir Adelante">
+      <i class="fa-solid fa-arrow-right"></i>
+    </button>
+    <span class="button-label">ADELANTE</span>
+  </div>
+
+  <!-- Botón para Pistas Extras -->
+  <button id="btn-pista-extra" class="btn-pista-extra-estilo">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+
+  <h1 id="main-title">El mapa de los Secretos</h1>
+  <p id="subtitle">Reconstruye el mapa arrastrando las piezas hasta el tablero. Una vez terminado será desvelado donde se encuentran 4 de las claves necesarias para escapar de esta isla. !Pero corre, el tiempo se está acabando!</p>
+
+  <div class="puzzle-wrapper">
+    <div id="pieces-section">
+      <div id="pieces" class="pieces-container"></div>
+    </div>
+    <div id="board-section">
+      <h2 id="board-title">Tablero</h2>
+      <div id="board" class="board-container"></div>
+    </div>
+  </div>
+
+  <script src="funciones.js"></script>
+</body>
+</html>

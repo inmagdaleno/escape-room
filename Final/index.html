@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disco Cifrado</title>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+  <!-- Botón para Volver Atrás -->
+  <button id="btn-volver-atras" class="btn-volver-atras-estilo" onclick="history.back()">
+    <i class="fa-solid fa-arrow-left"></i>
+  </button>
+
+  <!-- Botón para Pistas Extras -->
+  <button id="btn-pista-extra" class="btn-pista-extra-estilo">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+
+  <div class="main-container">
+    <div class="left-section">
+      <div class="disco-container">
+        <img src="img/flecha.svg" alt="Flecha" class="flecha">
+        <div class="disco" id="disco3"></div>
+        <div class="disco" id="disco2"></div>
+        <div class="disco" id="disco1"></div>
+        <div class="valor-display" id="valorDisplay">0</div>
+      </div>
+      <button id="obtenerCoordenadas">Obtener coordenadas</button>
+    </div>
+    <div class="right-panel">
+      <h1>El Códice de los Astros</h1>
+      <p>LLegó el momento de la verdad, es hora de que averigues las coordenadas del portal que te permitirán abandonar esta isla. Para ello deberás descifrar las claves de los ancestros que has ido encontrando por el camino.</p>
+      <p>Alinéalas con sus astros y encuentra la coordenada que corresponde a cada una de ellas.</p>
+      <div class="input-row">
+        <input type="number" min="0" max="99" class="code-input">
+        <input type="number" min="0" max="99" class="code-input">
+        <input type="number" min="0" max="99" class="code-input">
+        <input type="number" min="0" max="99" class="code-input">
+        <input type="number" min="0" max="99" class="code-input">
+        <input type="number" min="0" max="99" class="code-input">
+      </div>
+      <button id="comprobar">Comprobar</button>
+    </div>
+  </div>
+  <script src="funciones.js"></script>
+</body>
+</html>

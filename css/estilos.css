@@ -1,0 +1,650 @@
+/* Estilos para los nuevos botones de la esquina superior derecha */
+.esquina-superior-derecha {
+  position: fixed;
+  top: 20px;
+  right: 40px;
+  z-index: 1001; /* Asegura que esté por encima de otros elementos */
+  display: flex;
+  gap: 20px; /* Espacio entre los botones */
+}
+
+.btn-icono-esquina {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff00f0, #00ffbf);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-icono-esquina:hover {
+  background-position: 100% 100%;
+  transform: scale(1.1);
+}
+
+/* Estilos para el modal de perfil */
+#form-perfil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 90%;
+  text-align: center; /* Centrar todo el contenido */
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.perfil-img-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+#perfil-img-preview {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.5);
+}
+
+.form-grupo {
+  width: 100%; /* Ocupar todo el ancho disponible */
+  max-width: 400px; /* Limitar el ancho del grupo al mismo que el input */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrar los hijos */
+  margin: 0 auto; /* Centrar el grupo completo */
+}
+
+.form-grupo label {
+  font-weight: 500;
+  color: #f0f0f0;
+  width: 100%; /* Asegura que la etiqueta ocupe el ancho del input */
+  max-width: 400px; /* Limita el ancho de la etiqueta al mismo que el input */
+  text-align: left; /* Alinea el texto de la etiqueta a la izquierda */
+  display: block; /* Asegura que la etiqueta se comporte como un bloque */
+  margin: 0 auto; /* Centra la etiqueta dentro del form-grupo */
+  font-size: 14px; /* Reducir el tamaño de la fuente en 2px */
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 12px 24px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  display: block; /* Asegura que el input se comporte como un bloque */
+  margin: 0 auto; /* Centrar el input */
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 15px 30px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  display: block; /* Asegura que el input se comporte como un bloque */
+  margin: 0 auto; /* Centrar el input */
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 15px 30px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  display: block; /* Asegura que el input se comporte como un bloque */
+  margin: 0 auto; /* Centrar el input */
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 15px 30px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  display: block; /* Asegura que el input se comporte como un bloque */
+  margin: 0 auto; /* Centrar el input */
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 15px 30px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  display: block; /* Asegura que el input se comporte como un bloque */
+  margin: 0 auto; /* Centrar el input */
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 15px 30px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto; /* Centrar el input */
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 15px 30px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  margin: 0 auto; /* Centrar el input */
+}
+
+/* Estilos para la tabla de ranking */
+#tabla-ranking {
+  width: 90%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+#tabla-ranking th, #tabla-ranking td {
+  padding: 12px 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  text-align: left;
+}
+
+#tabla-ranking th {
+  background-color: rgba(255, 255, 255, 0.15);
+  font-weight: 700;
+}
+
+#tabla-ranking tbody tr:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+#tabla-ranking tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+@keyframes animated-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.pantalla {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
+  padding: 20px;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+}
+
+.pantalla.visible {
+  display: flex;
+}
+
+#pantalla-bienvenida {
+  background-image: url('../img/paisaje-tropical-soleado.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+#pantalla-modo-juego {
+  background-image: url('../img/atardecer.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+#pantalla-bienvenida .contenido,
+#pantalla-modo-juego .contenido {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 40px;
+  color: #1a1a1a;
+  max-width: 600px;
+  position: relative; /* Añadido para posicionamiento absoluto del canvas */
+}
+
+/* Estilos para el canvas de la animación de partículas */
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  /* El tamaño del canvas se ajustará dinámicamente en JS */
+}
+
+/* El h1#text ahora es el elemento sobre el que se dibuja la animación */
+#text {
+  /* Mantener los estilos originales del h1 */
+  font-family: "Barriecito", system-ui;
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 30px;
+  pointer-events: none; /* Para que el mouseenter/mouseleave funcione en el canvas */
+  position: relative; /* Para que el canvas se posicione en relación a él */
+  z-index: 1; /* Asegura que el texto esté por encima del canvas si es necesario */
+}
+
+.contenido {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 40px;
+  color: #1a1a1a;
+  max-width: 600px;
+}
+
+#pantalla-bienvenida .contenido p {
+  color: white;
+  font-weight: 650;
+  line-height: 26px;
+}
+
+#pantalla-introduccion {
+  background-image: url('../img/paisaje-tropical-soleado.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+#escena-playa {
+  background-image: url('../img/botella.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+#escena-templo {
+  background-image: url('../img/templo.webp');
+  background-size: cover;
+  background-position: center;
+}
+
+h2 {
+  font-family: "Barriecito", system-ui;
+  font-size: 40px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+}
+
+.modal-contenido h1,
+.modal-contenido h2,
+.modal-contenido p {
+  color: white; /* Asegura que el texto del modal sea blanco */
+  font-weight: 650;
+}
+
+#modal-introduccion {
+  display: flex; /* Asegura que el modal de introducción esté visible por defecto */
+  padding: 40px;
+}
+
+button {
+  background: linear-gradient(45deg, #ff00f0, #00ffbf);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 10px rgba(107, 107, 107, 0.5);
+  font-size: 16px;
+}
+
+button:hover {
+  background-position: 100% 100%;
+  transform: translateY(-2px);
+  color: #e7fef6;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 2001; /* z-index base para todos los modales */
+}
+
+/* z-index superior para modales que se superponen */
+.modal-overlay {
+    z-index: 2000;
+}
+
+.modal-contenido {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(15, 18, 61, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 20px 20px 5px 20px; /* Top, Right, Bottom, Left */
+  color: #1a1a1a;
+  width: 40vw; /* Ocupa el 40% del ancho de la ventana (20% más estrecho) */
+  height: 70vh; /* Ocupa el 70% del alto de la ventana */
+  max-width: 100%; /* Asegura que no sea demasiado grande en pantallas pequeñas */
+  max-height: 100%; /* Asegura que no sea demasiado grande en pantallas pequeñas */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: auto; /* Para manejar el desbordamiento de contenido */
+}
+
+.modal-contenido img {
+  width: 60%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="text"], input[type="email"] {
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(82, 82, 82, 0.37);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 12px 24px;
+  color: #ffffff;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  box-sizing: border-box;
+  margin-top: 10px;
+}
+
+input[type="text"]::placeholder, input[type="email"]::placeholder {
+  color: #bbbbbb; /* Color de placeholder más oscuro */
+}
+
+.pergamino-container {
+  width: 95%; 
+  height: auto; /* Permitir que la altura se ajuste automáticamente */
+  max-height: 80%; /* Limitar la altura máxima al 80% del contenedor padre */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.modal-contenido input[type="text"] + button {
+    margin-top: 16px;
+}
+
+#btn-guardar-perfil{
+  margin-top: 10px;
+  width: 100%; /* Ocupar el 100% del ancho del .form-grupo */
+  max-width: 400px;
+  padding: 12px 24px; /* Ajustar el padding para que coincida con los inputs */
+  box-sizing: border-box; /* Asegurar que el padding se incluya en el ancho */
+}
+.modal .cerrar {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 30px;
+  color: white; /* Cambiado a blanco para asegurar visibilidad */
+  cursor: pointer;
+  z-index: 2002; /* Asegura que esté por encima de todo */
+}
+
+.oculto {
+  display: none;
+}
+
+#feedback-puzzle1 {
+  display: none; /* Oculto por defecto */
+  margin-top: 10px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+#feedback-puzzle1{
+  padding: 20px;
+  width: 350px;
+  font-size: 14PX;
+  font-weight: 500;
+  margin-top: 20px;
+}
+
+#feedback-puzzle1.success {
+  background-color: rgba(146, 251, 146, 0.5); /* Verde con 50% de transparencia */
+  margin-bottom: 20px;
+}
+
+#feedback-puzzle1.error {
+  background-color: rgba(255, 142, 142, 0.5); /* Rojo con 50% de transparencia */
+}
+#feedback-puzzle1.warning {
+  background-color: rgba(252, 206, 122, 0.5); /* Naranja semitransparente */
+}
+
+#btn-avanzar-diario {
+  background-color: #6a7bff;
+  border: none;
+  padding: 15px 25px;
+  font-size: 18px;
+  color: #0f2413;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px 0 rgba(1, 44, 25, 0.37);
+  transition: background-color 0.3s;
+}
+
+#btn-avanzar-diario :hover {
+  background-color: #2949ff;
+  transform: scale(1.05);
+  box-shadow: 14px 16px 35px 0px rgba(94,93,93,0.9);
+}
+
+#score-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(45deg, #ff00f0, #00ffbf);
+  background-size: 200% 200%;
+  animation: animated-gradient 3s ease-in-out infinite;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(107, 107, 107, 0.5);
+}
+
+#timer-container {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(45deg, #ff00f0, #00ffbf);
+  background-size: 200% 200%;
+  animation: animated-gradient 3s ease-in-out infinite;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  z-index: 1000;
+  box-shadow: 0 0 10px rgba(107, 107, 107, 0.5);
+}
+
+.btn-pista-extra-estilo {
+  position: fixed;
+  top: 20px; /* Ajusta la distancia desde la parte superior */
+  left: 40px; /* Ajusta la distancia desde la izquierda */
+  width: 50px; /* Mismo ancho que los botones de la derecha */
+  height: 50px; /* Mismo alto que los botones de la derecha */
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff00f0, #00ffbf);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px; /* Mismo tamaño de fuente */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1001; /* Asegura que esté en la misma capa que los otros botones de esquina */
+}
+
+.btn-pista-extra-estilo:hover {
+  background-color: #2949ff;
+  transform: scale(1.1);
+}
+
+.btn-volver-atras-estilo {
+  position: fixed;
+  top: 20px;
+  left: 40px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #6a7bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  z-index: 1000;
+}
+
+.btn-volver-atras-estilo:hover {
+  background-color: #2949ff;
+  transform: scale(1.1);
+}
+
+#botones-pista-container {
+    display: flex;
+    flex-direction: column; /* Apila los botones verticalmente */
+    gap: 15px;
+    margin-top: 20px;
+    width: 80%; /* Ajusta el ancho del contenedor */
+    max-width: 300px; /* Limita el ancho máximo */
+}
+
+.btn-pista-primario, .btn-pista-secundario {
+    width: 100%; /* Ambos botones ocupan el ancho completo del contenedor */
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    box-shadow: 0 0 10px rgba(107, 107, 107, 0.5);
+    font-size: 16px;
+    border: none;
+}
+
+.btn-pista-primario {
+    background: linear-gradient(45deg, #ff00f0, #00ffbf);
+    background-size: 200% 200%;
+    color: white;
+}
+
+.btn-pista-primario:hover {
+    background-position: 100% 100%;
+    transform: translateY(-2px);
+    color: #e7fef6;
+}
+
+.btn-pista-secundario {
+    backdrop-filter: blur(6px) saturate(180%);
+    background: rgba(255, 255, 255, 0.1);
+    color: #3b3b3b;
+}
+
+.btn-pista-secundario:hover {
+    background: linear-gradient(45deg, #ff00f0, #00ffbf);
+    transform: translateY(-2px);
+    color: #e7fef6;
+}

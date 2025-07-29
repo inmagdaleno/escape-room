@@ -1,0 +1,165 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background-image: url('img/fondo_piedra.webp');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  overflow: hidden;
+  transition: background-image 2s ease-in-out;
+}
+
+h1 {
+  margin-top: 50px;
+}
+
+p {
+  font-size: 18px;
+  font-weight: 400;
+  color: azure;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.puzzle-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 120px;
+  margin-bottom: 20px;
+}
+
+.pieces-container {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: -10px auto 20px -150px;
+}
+
+.board-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 500px;
+  height: 500px;
+  margin: 20px auto;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+}
+
+.piece {
+  position: absolute;
+  width: 83.333px;
+  height: 83.333px;
+  box-sizing: border-box;
+  background-size: 500px 500px;
+  background-repeat: no-repeat;
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4), 0 0 15px rgba(0, 0, 0, 0.2) inset;
+  transform: rotateX(5deg) rotateY(-5deg);
+}
+
+.slot {
+  width: 83.333px;
+  height: 83.333px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+.piece:active {
+  cursor: grabbing;
+  transform: scale(1.1) translateY(-10px);
+}
+
+.correct-slot {
+  box-shadow: 0 0 0 3px limegreen;
+}
+
+.incorrect-slot {
+  box-shadow: 0 0 0 3px crimson;
+}
+
+.piece:hover {
+  transform: scale(1.05) translateY(-5px) rotateX(0deg) rotateY(0deg);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 0, 0, 0.3) inset;
+}
+
+.confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.confetti::before, .confetti::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #f00;
+  border-radius: 50%;
+  animation: confetti-fall 5s infinite linear;
+}
+
+.confetti::after {
+  left: 50%;
+  background-color: #0f0;
+  animation-delay: 1s;
+}
+
+@keyframes confetti-fall {
+  0% { transform: translate(0, -100px) rotate(0deg); opacity: 1; }
+  100% { transform: translate(100px, 100vh) rotate(720deg); opacity: 0; }
+}
+
+/* New styles for the forward button */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px; /* Space between button and label */
+  position: fixed; /* Position relative to viewport */
+  top: 20px; /* Adjust as needed */
+  left: 100px; /* Adjust as needed */
+  z-index: 1001; /* Ensure it's above other content */
+}
+
+.button-label {
+  color: white;
+  font-size: 9px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.btn-icono-esquina {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff00f0, #00ffbf);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-icono-esquina:hover {
+  background-position: 100% 100%;
+  transform: scale(1.1);
+}

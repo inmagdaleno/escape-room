@@ -1,83 +1,83 @@
 document.addEventListener("DOMContentLoaded", () => {
   // Elementos de la interfaz
-  const btnComenzar = document.getElementById("btn-comenzar");
-  const scoreDisplay = document.getElementById("score");
-  const timerDisplay = document.getElementById("timer");
-  const scoreFinalDisplay = document.getElementById("score-final");
-  const btnPistaExtra = document.getElementById("btn-pista-extra");
-  const btnReiniciar = document.getElementById("btn-reiniciar");
+  window.btnComenzar = document.getElementById("btn-comenzar");
+  window.scoreDisplay = document.getElementById("score");
+  window.timerDisplay = document.getElementById("timer");
+  window.scoreFinalDisplay = document.getElementById("score-final");
+  window.btnPistaExtra = document.getElementById("btn-pista-extra");
+  window.btnReiniciar = document.getElementById("btn-reiniciar");
 
   // Pantallas
-  const pantallaBienvenida = document.getElementById("pantalla-bienvenida");
-  const pantallaModoJuego = document.getElementById("pantalla-modo-juego");
-  const escenaPlaya = document.getElementById("escena-playa");
-  const escenaJungla = document.getElementById("escena-jungla");
-  const escenaCueva = document.getElementById("escena-cueva");
-  const escenaFaro = document.getElementById("escena-faro");
-  const pantallaFinal = document.getElementById("pantalla-final");
+  window.pantallaBienvenida = document.getElementById("pantalla-bienvenida");
+  window.pantallaModoJuego = document.getElementById("pantalla-modo-juego");
+  window.escenaPlaya = document.getElementById("escena-playa");
+  window.escenaJungla = document.getElementById("escena-jungla");
+  window.escenaCueva = document.getElementById("escena-cueva");
+  window.escenaFaro = document.getElementById("escena-faro");
+  window.pantallaFinal = document.getElementById("pantalla-final");
 
   // Modales
-  const modalPista = document.getElementById("modal-pista");
-  const cerrarModalPista = document.getElementById("cerrar-modal-pista");
-  const pistaImg = document.getElementById("pista-img");
-  const feedbackPista = document.getElementById("feedback-pista");
-  const btnSegundaPista = document.getElementById("btn-segunda-pista");
-  const btnCerrarPista = document.getElementById("btn-cerrar-pista"); // Corregido el ID
+  window.modalPista = document.getElementById("modal-pista");
+  window.cerrarModalPista = document.getElementById("cerrar-modal-pista");
+  window.pistaImg = document.getElementById("pista-img");
+  window.feedbackPista = document.getElementById("feedback-pista");
+  window.btnSegundaPista = document.getElementById("btn-segunda-pista");
+  window.btnCerrarPista = document.getElementById("btn-cerrar-pista");
 
   // Botones de selección de modo
-  const btnModoPuntuacion = document.getElementById("btn-modo-puntuacion");
-  const btnModoTiempo = document.getElementById("btn-modo-tiempo");
+  window.btnModoPuntuacion = document.getElementById("btn-modo-puntuacion");
+  window.btnModoTiempo = document.getElementById("btn-modo-tiempo");
 
   // Estado del juego
-  let gameMode = ""; // 'score' o 'time'
-  let score = 400;
-  let timeLeft = 30 * 60; // 30 minutos en segundos
-  let timerInterval;
-  let pistasUsadasPuzzle = 0; // Pistas usadas en el puzzle actual
-  let totalPistasUsadas = 0; // Pistas usadas en todo el juego
-  let puzzleActual = "";
+  window.gameMode = ""; // 'score' o 'time'
+  window.score = 400;
+  window.timeLeft = 30 * 60; // 30 minutos en segundos
+  window.timerInterval;
+  window.pistasUsadasPuzzle = 0; // Pistas usadas en el puzzle actual
+  window.totalPistasUsadas = 0; // Pistas usadas en todo el juego
+  window.puzzleActual = "";
 
   // --- INICIALIZACIÓN DEL JUEGO ---
-  function inicializarJuego() {
-    score = 400;
-    timeLeft = 30 * 60; // 30 minutos en segundos
-    totalPistasUsadas = 0;
-    if (scoreDisplay) scoreDisplay.textContent = score;
-    updateTimerDisplay();
-    clearInterval(timerInterval);
+  window.inicializarJuego = function() {
+    window.score = 400;
+    window.timeLeft = 30 * 60; // 30 minutos en segundos
+    window.totalPistasUsadas = 0;
+    if (window.scoreDisplay) window.scoreDisplay.textContent = window.score;
+    window.updateTimerDisplay();
+    clearInterval(window.timerInterval);
 
-    cambiarPantalla(null, pantallaBienvenida);
-    Object.keys(puzzles).forEach(key => {
-      const puzzle = puzzles[key];
-      if (puzzle.modal) puzzle.modal.style.display = "none";
-    });
-    if (modalPista) modalPista.style.display = "none";
+    window.cambiarPantalla(null, window.pantallaBienvenida);
+    // Object.keys(puzzles).forEach(key => {
+    //   const puzzle = puzzles[key];
+    //   if (puzzle.modal) puzzle.modal.style.display = "none";
+    // });
+    if (window.modalPista) window.modalPista.style.display = "none";
     const scoreContainer = document.getElementById("score-container");
     if (scoreContainer) scoreContainer.style.display = "none";
     const timerContainer = document.getElementById("timer-container");
     if (timerContainer) timerContainer.style.display = "none";
-    if (btnPistaExtra) btnPistaExtra.style.display = "none";
+    if (window.btnPistaExtra) window.btnPistaExtra.style.display = "none";
   }
 
   // --- NAVEGACIÓN ENTRE PANTALLAS ---
-  function cambiarPantalla(pantallaOcultar, pantallaMostrar) {
+  window.cambiarPantalla = function(pantallaOcultar, pantallaMostrar) {
     console.log(`Cambiando pantalla de ${pantallaOcultar ? pantallaOcultar.id : 'ninguna'} a ${pantallaMostrar.id}`);
     if (pantallaOcultar) pantallaOcultar.classList.remove("visible");
     pantallaMostrar.classList.add("visible");
 
-    if (pantallaMostrar !== pantallaBienvenida && pantallaMostrar !== pantallaModoJuego && pantallaMostrar !== pantallaFinal) {
-      if (btnPistaExtra) btnPistaExtra.style.display = "flex";
+    if (pantallaMostrar !== window.pantallaBienvenida && pantallaMostrar !== window.pantallaModoJuego && pantallaMostrar !== window.pantallaFinal) {
+      if (window.btnPistaExtra) window.btnPistaExtra.style.display = "flex";
       const scoreContainer = document.getElementById("score-container");
       const timerContainer = document.getElementById("timer-container");
-      if (gameMode === 'score') {
+      if (window.gameMode === 'score') {
         if (scoreContainer) scoreContainer.style.display = "block";
         if (timerContainer) timerContainer.style.display = "none";
-      } else if (gameMode === 'time') {
+      } else if (window.gameMode === 'time') {
         if (scoreContainer) scoreContainer.style.display = "none";
         if (timerContainer) timerContainer.style.display = "block";
       }
     } else {
-      if (btnPistaExtra) btnPistaExtra.style.display = "none";
+      if (window.btnPistaExtra) window.btnPistaExtra.style.display = "none";
       const scoreContainer = document.getElementById("score-container");
       const timerContainer = document.getElementById("timer-container");
       if (scoreContainer) scoreContainer.style.display = "none";
@@ -86,20 +86,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- LÓGICA DEL TEMPORIZADOR ---
-  function startTimer() {
-    timerInterval = setInterval(() => {
-      timeLeft--;
-      updateTimerDisplay();
-      if (timeLeft <= 0) {
-        clearInterval(timerInterval);
+  window.startTimer = function() {
+    window.timerInterval = setInterval(() => {
+      window.timeLeft--;
+      window.updateTimerDisplay();
+      if (window.timeLeft <= 0) {
+        clearInterval(window.timerInterval);
         alert("¡Se acabó el tiempo! Fin del juego.");
-        inicializarJuego();
+        window.inicializarJuego();
       }
     }, 1000);
   }
 
-  function updateTimerDisplay() {
-    if (gameMode !== 'time') return;
+  window.updateTimerDisplay = function() {
+    if (window.gameMode !== 'time') return;
 
     const minTens = document.getElementById('minTens');
     const minUnits = document.getElementById('minUnits');
@@ -108,8 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!minTens || !minUnits || !secTens || !secUnits) return;
 
-    const minutes = Math.floor(timeLeft / 60);
-    const seconds = timeLeft % 60;
+    const minutes = Math.floor(window.timeLeft / 60);
+    const seconds = window.timeLeft % 60;
 
     const minStr = String(minutes).padStart(2, '0');
     const secStr = String(seconds).padStart(2, '0');
@@ -120,25 +120,31 @@ document.addEventListener("DOMContentLoaded", () => {
     secUnits.textContent = secStr[1];
   }
 
+  window.formatTime = function(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
   
 
   // --- FUNCIÓN PARA ENVIAR RESULTADOS DE LA PARTIDA ---
-  function sendGameResult() {
+  window.sendGameResult = function() {
     const gameData = {
       // !!! IMPORTANTE: Reemplaza 1 con el ID real del usuario logueado
       // Esto debería obtenerse de la sesión del usuario logueado
       id_usuario: 1, 
-      modo_juego: gameMode,
-      pistas_usadas: totalPistasUsadas,
+      modo_juego: window.gameMode,
+      pistas_usadas: window.totalPistasUsadas,
       resultado: 1 // 1 para partida completada
     };
 
-    if (gameMode === 'score') {
-      gameData.puntuacion_final = score;
+    if (window.gameMode === 'score') {
+      gameData.puntuacion_final = window.score;
       gameData.tiempo_restante_final = null;
-    } else if (gameMode === 'time') {
+    } else if (window.gameMode === 'time') {
       gameData.puntuacion_final = null;
-      gameData.tiempo_restante_final = timeLeft;
+      gameData.tiempo_restante_final = window.timeLeft;
     }
 
     fetch('controller/guardarPartida.php', {
@@ -165,7 +171,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- GESTIÓN DE MODALES SUPERPUESTOS ---
   let activeGameModal = null;
 
-  function openOverlayModal(modal) {
+  window.openOverlayModal = function(modal) {
+    console.log('Attempting to open modal:', modal ? modal.id : 'null');
     // Ocultar temporalmente el modal de juego activo
     const gameModals = document.querySelectorAll('.game-modal');
     gameModals.forEach(m => {
@@ -177,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modal) modal.style.display = 'flex';
   }
 
-  function closeOverlayModal(modal) {
+  window.closeOverlayModal = function(modal) {
     if (modal) modal.style.display = 'none';
     // Restaurar el modal de juego si había uno activo
     if (activeGameModal) {
@@ -228,7 +235,12 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!tablaRankingBody) return;
       tablaRankingBody.innerHTML = ''; // Limpiar tabla
 
-      fetch('controller/obtenerRanking.php')
+      fetch('controller/obtenerRanking.php', {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+        }
+      })
           .then(response => response.json())
           .then(data => {
               if (data.success) {
@@ -285,11 +297,29 @@ document.addEventListener("DOMContentLoaded", () => {
       cerrarModalRanking.addEventListener('click', () => closeOverlayModal(modalRanking));
   }
 
+  // Event listener para btn-pista-extra-modal1
+  const btnPistaExtraModal1 = document.getElementById('btn-pista-extra-modal1');
+  if (btnPistaExtraModal1) {
+    btnPistaExtraModal1.addEventListener('click', () => {
+      console.log('btnPistaExtraModal1 clicked. modalPista is:', window.modalPista);
+      window.openOverlayModal(window.modalPista);
+    });
+  }
+
   // Cierra los modales si se hace clic fuera de ellos
   window.addEventListener('click', (e) => {
-      if (e.target === modalPerfil) closeOverlayModal(modalPerfil);
-      if (e.target === modalRanking) closeOverlayModal(modalRanking);
+      if (e.target === window.modalPerfil) window.closeOverlayModal(window.modalPerfil);
+      if (e.target === window.modalRanking) window.closeOverlayModal(window.modalRanking);
+      if (e.target === window.modalPista) window.closeOverlayModal(window.modalPista);
   });
+
+  // Event listener para el botón global de Pistas Extras
+  if (window.btnPistaExtra) {
+    window.btnPistaExtra.addEventListener('click', () => {
+      console.log('btnPistaExtra clicked. modalPista is:', window.modalPista);
+      window.openOverlayModal(window.modalPista);
+    });
+  }
 
   // --- EVENT LISTENERS PRINCIPALES ---
   // Lógica para el botón "Comenzar la aventura"
@@ -326,6 +356,14 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnReiniciar) {
     btnReiniciar.addEventListener("click", () => {
       inicializarJuego();
+    });
+  }
+
+  // Lógica para el botón "Examinar tablero" (Sudoku)
+  const btnIrSudoku = document.getElementById("btn-ir-sudoku");
+  if (btnIrSudoku) {
+    btnIrSudoku.addEventListener("click", () => {
+      window.location.href = "sudoku/sudoku.html";
     });
   }
 

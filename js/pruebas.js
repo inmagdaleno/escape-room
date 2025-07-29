@@ -2,43 +2,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const puzzles = {
     puzzle1: {
       modal: document.getElementById("modal1"),
-      respuesta: "reune las coordenadas",
+      respuesta: "trece cuadrados en zeta",
       btnVer: document.getElementById("btn-ver-papel"),
       btnResolver: document.getElementById("btn-resolver-puzzle1"),
       input: document.getElementById("respuesta-puzzle1"),
       feedback: document.getElementById("feedback-puzzle1"),
       cerrarModal: document.getElementById("cerrar-modal-puzzle1"),
-      escenaSiguiente: document.getElementById("escena-jungla"),
-    },
-    puzzle2: {
-      modal: document.getElementById("modal2"),
-      respuesta: "unmapa",
-      btnVer: document.getElementById("btn-ver-puzzle2"),
-      btnResolver: document.getElementById("btn-resolver-puzzle2"),
-      input: document.getElementById("respuesta-puzzle2"),
-      feedback: document.getElementById("feedback-puzzle2"),
-      cerrarModal: document.getElementById("cerrar-modal-puzzle2"),
-      escenaSiguiente: document.getElementById("escena-cueva"),
-    },
-    puzzle3: {
-      modal: document.getElementById("modal3"),
-      respuesta: "ninguno",
-      btnVer: document.getElementById("btn-ver-puzzle3"),
-      btnResolver: document.getElementById("btn-resolver-puzzle3"),
-      input: document.getElementById("respuesta-puzzle3"),
-      feedback: document.getElementById("feedback-puzzle3"),
-      cerrarModal: document.getElementById("cerrar-modal-puzzle3"),
-      escenaSiguiente: document.getElementById("escena-faro"),
-    },
-    puzzle4: {
-      modal: document.getElementById("modal4"),
-      respuesta: "unaaguja",
-      btnVer: document.getElementById("btn-ver-puzzle4"),
-      btnResolver: document.getElementById("btn-resolver-puzzle4"),
-      input: document.getElementById("respuesta-puzzle4"),
-      feedback: document.getElementById("feedback-puzzle4"),
-      cerrarModal: document.getElementById("cerrar-modal-puzzle4"),
-      escenaSiguiente: document.getElementById("pantalla-final"),
+      escenaSiguiente: document.getElementById("escena-templo"),
     },
   };
 
@@ -55,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (puzzle.btnVer) {
       puzzle.btnVer.addEventListener("click", () => {
-        puzzleActual = puzzleKey;
-        pistasUsadasPuzzle = 0;
+        window.puzzleActual = puzzleKey;
+        window.pistasUsadasPuzzle = 0;
         if (puzzle.modal) puzzle.modal.style.display = "flex";
         if (puzzle.input) puzzle.input.value = "";
         if (puzzle.feedback) puzzle.feedback.style.display = "none";
@@ -101,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (scoreDisplay) scoreDisplay.textContent = score;
             if (puzzle.feedback) puzzle.feedback.textContent = "Incorrecto, prueba de nuevo. Has perdido 10 puntos.";
           } else if (gameMode === 'time') {
-            timeLeft -= 120; // Resta 2 minutos
+            timeLeft -= 60; // Resta 2 minutos
             updateTimerDisplay();
             if (puzzle.feedback) puzzle.feedback.textContent = "Incorrecto, prueba de nuevo. Has perdido 2 minutos.";
             if (timeLeft <= 0) {

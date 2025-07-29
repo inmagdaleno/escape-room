@@ -681,11 +681,13 @@ input[type="text"]::placeholder, input[type="email"]::placeholder {
     font-family: "Barriecito";
     font-size: 28px;
     margin-bottom: 15px;
+
 }
 
 .modal-content p {
     font-size: 18px;
     margin-bottom: 20px;
+    font-weight: 400;
 }
 
 .modal-image {
@@ -694,6 +696,25 @@ input[type="text"]::placeholder, input[type="email"]::placeholder {
     margin-bottom: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.continue-button{
+  background: linear-gradient(45deg, #ff00f0, #00ffbf);
+  background-size: 200% 200%;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 10px rgba(107, 107, 107, 0.5);
+  font-size: 16px;
+}
+.continue-button:hover {
+  background-position: 100% 100%;
+  transform: translateY(-2px);
+  color: #e7fef6;
 }
 
 .close-button {

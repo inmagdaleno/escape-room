@@ -40,7 +40,7 @@
       <h2>Perfil de Usuario</h2>
       <form id="form-perfil">
         <div class="perfil-img-container">
-          <img id="perfil-img-preview" src="img/avatar.png" alt="Imagen de perfil">
+          <img id="perfil-img-preview" src="img/avatar.webp" alt="Imagen de perfil">
           <input type="file" id="input-perfil-img" accept="image/*" style="display: none;">
           <button type="button" id="btn-cambiar-img" class="btn-pista-secundario">Cambiar Imagen</button>
         </div>
@@ -131,30 +131,47 @@
       <!-- Modal para el puzzle 1 -->
       <div id="modal1" class="modal">
         <div class="modal-contenido">
-          <img id="pergamino-img" src="img/pergaminoOK.png" alt="Pergamino antiguo con un mensaje cifrado">
+          <img id="pergamino-img" src="img/pergamino1.webp" alt="Pergamino antiguo con un mensaje cifrado">
           <span class="cerrar" id="cerrar-modal-puzzle1">&times;</span>
           <div class="pergamino-container">
             <input type="text" id="respuesta-puzzle1" placeholder="Introduce la respuesta" />
             <button id="btn-resolver-puzzle1">Resolver</button>
             <div class="feedback"><p id="feedback-puzzle1"></p></div>
           </div>
+          <button id="btn-pista-extra-modal1" class="btn-pista-extra-estilo-modal1">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
       </div>
 
       </div>
+
+  <!-- Modal para Pista Extra -->
+  <div id="modal-pista1" class="modal modal-overlay game-modal">
+    <div class="modal-contenido">
+      <span class="cerrar" id="cerrar-modal-pista">&times;</span>
+      <h2>Pista Extra</h2>
+      <p id="pista-explicacion"></p>
+      <p id="feedback-pista" class="feedback"></p>
+      <div class="modal-acciones">
+        <button id="btn-confirmar-pista" class="btn-pista-primario btn-primary-gradient">Confirmar</button>
+        <button id="btn-descartar-pista" class="btn-pista-secundario">Descartar</button>
+      </div>
+    </div>
+  </div>
   </section>
 
-      <!-- Pantalla Templo -->
+   <!-- Pantalla Templo -->
       <section id="escena-templo" class="pantalla">
         <div class="contenido">
           <h2>El Templo</h2>
           <p>A lo lejos divisas lo que parecen ser los restos de un templo erigido sobre las rocas. ¿Será allí dónde se encuentra lo que necesitas para salir de aquí?</p>
-          <p>No hay tiempo para dudar. Así que te lanzas al mar y subes por las escarpadas rocas. Recorres cada palmo del templo sin encontrar nada hasta que tropiezas con una gran piedra a modo de altar. Sobre el altar un tablero de madera tallada rodeado de pequeñas piezas de madera y sobre el tablero una inscripción: "</p>
+          <p>No hay tiempo para dudar. Así que te lanzas al mar y subes por las escarpadas rocas. Recorres el templo sin encontrar nada hasta que tropiezas con un pequeño tablero de madera tallado rodeado de pequeñas piezas de madera y sobre el tablero una inscripción: "Alinea cada pieza con su ancestro"</p>
           <button id="btn-ir-sudoku">Examinar tablero</button>
         </div>
       </section>
 
-
-<!-- Pantalla Jungla-->
+      
+      <!-- Pantalla Jungla-->
       <section id="escena-jungla" class="pantalla">
         <div class="contenido">
           <h2>La Jungla</h2>
@@ -182,6 +199,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrambleTextPlugin.min.js"></script>
 
   <script src="js/funciones.js"></script>
+  <script src="js/juego.js"></script>
+  <script src="js/pruebas.js"></script>
   <script src="js/gsap.js"></script>
 </body>
 </html>

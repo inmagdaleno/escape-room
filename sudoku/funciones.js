@@ -887,6 +887,10 @@ function handleSolveButton() {
       sendGameResult(); // Enviar resultado al resolver el Sudoku
       solveButton.textContent = "Continuar";
       isSudokuSolvedOnce = true; // Marcar que el Sudoku ha sido resuelto
+      const modalSudokuResuelto = document.getElementById('modal-sudoku-resuelto');
+      if (modalSudokuResuelto) {
+        openOverlayModal(modalSudokuResuelto);
+      }
     } else {
       resultadoDiv.textContent = "Hay errores. Revisa filas, columnas y cuadrantes.";
       playSound("audioError");

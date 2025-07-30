@@ -4,13 +4,25 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnIrAdelante = document.getElementById("btn-ir-adelante");
   const groupIrAdelante = document.getElementById("group-ir-adelante");
 
-  // Force display for development
-  if (groupIrAdelante) groupIrAdelante.style.display = 'flex';
 
-  // Event listener for the new "Ir Adelante" button
+  // Elementos de la interfaz
+  const scoreDisplay = document.getElementById("score");
+  const timerDisplay = document.getElementById("timer");
+
+  // Modales
+  const modalPerfil = document.getElementById('modal-perfil');
+  const modalRanking = document.getElementById('modal-ranking');
+
+  // Estado del juego (se asume que se carga de localStorage o similar)
+  let gameMode = localStorage.getItem('gameMode') || 'score'; // 'score' o 'time'
+  let score = parseInt(localStorage.getItem('score')) || 400;
+  let timeLeft = parseInt(localStorage.getItem('timeLeft')) || (30 * 60); // 30 minutos en segundos
+  let timerInterval;
+
+// Evento para el botón "Ir Adelante"
   if (btnIrAdelante) {
     btnIrAdelante.addEventListener('click', () => {
-      window.location.href = '../index.html#escena-templo'; // Navigate to the temple scene
+      mostrarTransicionMapaCompleto();
     });
   }
 
@@ -66,6 +78,206 @@ document.addEventListener("DOMContentLoaded", () => {
   // Add dragover and drop listeners to piecesContainer
   piecesContainer.addEventListener("dragover", dragOver);
   piecesContainer.addEventListener("drop", drop);
+
+  // --- INICIALIZACIÓN DEL JUEGO (para score/timer) ---
+  function inicializarJuegoMapa() {
+    if (gameMode === 'score') {
+      if (scoreDisplay) scoreDisplay.textContent = score;
+      document.getElementById("score-container").style.display = "block";
+      document.getElementById("timer-container").style.display = "none";
+    } else if (gameMode === 'time') {
+      updateTimerDisplay();
+      document.getElementById("score-container").style.display = "none";
+      document.getElementById("timer-container").style.display = "block";
+      startTimer();
+    }
+    // Ocultar modales al inicio
+    if (modalPerfil) modalPerfil.style.display = 'none';
+    if (modalRanking) modalRanking.style.display = 'none';
+  }
+
+  // --- LÓGICA DEL TEMPORIZADOR ---
+  function startTimer() {
+    timerInterval = setInterval(() => {
+      timeLeft--;
+      updateTimerDisplay();
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        alert("¡Se acabó el tiempo! Fin del juego.");
+        window.location.href = "../index.html"; // Redirigir al inicio
+      }
+    }, 1000);
+  }
+
+  function updateTimerDisplay() {
+    if (timerDisplay) timerDisplay.textContent = formatTime(timeLeft);
+  }
+
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
+  // --- FUNCIÓN PARA ENVIAR RESULTADOS DE LA PARTIDA ---
+  function sendGameResult() {
+    const gameData = {
+      id_usuario: 1, // Asume un ID de usuario fijo o cárgalo de localStorage
+      modo_juego: gameMode,
+      pistas_usadas: 0, // No hay pistas en este puzzle
+      resultado: 1 // 1 para éxito, 0 para fallo
+    };
+
+    if (gameMode === 'score') {
+      gameData.puntuacion_final = score;
+      gameData.tiempo_restante_final = null;
+    } else if (gameMode === 'time') {
+      gameData.puntuacion_final = null;
+      gameData.tiempo_restante_final = timeLeft;
+    }
+
+    fetch('../controller/guardarPartida.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(gameData),
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Respuesta del servidor al guardar partida:', data);
+      if (data.success) {
+        console.log('Partida guardada con éxito.');
+      } else {
+        console.error('Error al guardar partida:', data.mensaje);
+      }
+    })
+    .catch((error) => {
+      console.error('Error en la solicitud de guardar partida:', error);
+    });
+  }
+
+  let activeGameModal = null;
+
+function openOverlayModal(modal) {
+  const gameModals = document.querySelectorAll('.modal-overlay'); // Selecciona todos los modales con esta clase
+  gameModals.forEach(m => {
+    if (m.style.display === 'flex') {
+      activeGameModal = m;
+      m.style.display = 'none';
+    }
+  });
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeOverlayModal(modal) {
+  if (modal) modal.style.display = 'none';
+  if (activeGameModal) {
+    activeGameModal.style.display = 'flex';
+    activeGameModal = null;
+  }
+}
+
+  // --- MODAL DE PERFIL ---
+  const btnPerfil = document.getElementById('btn-perfil');
+  const cerrarModalPerfil = document.getElementById('cerrar-modal-perfil');
+  const btnCambiarImg = document.getElementById('btn-cambiar-img');
+  const inputPerfilImg = document.getElementById('input-perfil-img');
+  const perfilImgPreview = document.getElementById('perfil-img-preview');
+
+  if (btnPerfil) {
+      btnPerfil.addEventListener('click', () => openOverlayModal(modalPerfil));
+  }
+  if (cerrarModalPerfil) {
+      cerrarModalPerfil.addEventListener('click', () => closeOverlayModal(modalPerfil));
+  }
+  if (btnCambiarImg) {
+      btnCambiarImg.addEventListener('click', () => {
+        if (inputPerfilImg) inputPerfilImg.click();
+      });
+  }
+
+  if (inputPerfilImg) {
+      inputPerfilImg.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files[0]) {
+              const reader = new FileReader();
+              reader.onload = (event) => {
+                  if (perfilImgPreview) perfilImgPreview.src = event.target.result;
+              };
+              reader.readAsDataURL(e.target.files[0]);
+          }
+      });
+  }
+
+  // --- MODAL DE RANKING ---
+  const btnRanking = document.getElementById('btn-ranking');
+  const cerrarModalRanking = document.getElementById('cerrar-modal-ranking');
+  const tablaRankingBody = document.querySelector('#tabla-ranking tbody');
+
+  function cargarRanking() {
+      if (!tablaRankingBody) return;
+      tablaRankingBody.innerHTML = '';
+
+      fetch('../controller/obtenerRanking.php', {credentials: 'include'})
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  const scoreRanking = data.ranking.score || [];
+                  scoreRanking.forEach((item, index) => {
+                      const row = document.createElement('tr');
+                      row.innerHTML = `
+                          <td>${index + 1}</td>
+                          <td>${item.jugador}</td>
+                          <td>${item.valor} pts</td>
+                      `;
+                      tablaRankingBody.appendChild(row);
+                  });
+
+                  if (scoreRanking.length > 0 && (data.ranking.time || []).length > 0) {
+                      const separatorRow = document.createElement('tr');
+                      separatorRow.innerHTML = `<td colspan="3" style="text-align: center; font-weight: bold; background-color: rgba(255,255,255,0.1);">--- Ranking por Tiempo ---</td>`;
+                      tablaRankingBody.appendChild(separatorRow);
+                  }
+
+                  const timeRanking = data.ranking.time || [];
+                  timeRanking.forEach((item, index) => {
+                      const row = document.createElement('tr');
+                      row.innerHTML = `
+                          <td>${index + 1}</td>
+                          <td>${item.jugador}</td>
+                          <td>${formatTime(item.valor)}</td>
+                      `;
+                      tablaRankingBody.appendChild(row);
+                  });
+
+              } else {
+                  console.error('Error al obtener ranking:', data.mensaje);
+                  tablaRankingBody.innerHTML = `<tr><td colspan="3">Error al cargar el ranking: ${data.mensaje}</td></tr>`;
+              }
+          })
+          .catch(error => {
+              console.error('Error en la solicitud de ranking:', error);
+              tablaRankingBody.innerHTML = `<tr><td colspan="3">Error de conexión al cargar el ranking.</td></tr>`;
+          });
+  }
+
+  if (btnRanking) {
+      btnRanking.addEventListener('click', () => {
+          cargarRanking();
+          openOverlayModal(modalRanking);
+      });
+  }
+
+  if (cerrarModalRanking) {
+      cerrarModalRanking.addEventListener('click', () => closeOverlayModal(modalRanking));
+  }
+
+  window.addEventListener('click', (e) => {
+      if (e.target === modalPerfil) closeOverlayModal(modalPerfil);
+      if (e.target === modalRanking) closeOverlayModal(modalRanking);
+  });
+
+  inicializarJuegoMapa();
 });
 
 let draggedPiece = null;
@@ -178,8 +390,8 @@ function checkWin() {
     boardContainer.style.transform = "scale(0.8)";
     mainTitle.style.transition = "opacity 2s ease-out";
     mainTitle.style.opacity = 0;
-    piecesTitle.style.transition = "opacity 2s ease-out";
-    piecesTitle.style.opacity = 0;
+    // piecesTitle.style.transition = "opacity 2s ease-out";
+    // piecesTitle.style.opacity = 0;
     boardTitle.style.transition = "opacity 2s ease-out";
     boardTitle.style.opacity = 0;
     piecesContainer.style.transition = "opacity 2s ease-out";
@@ -188,16 +400,16 @@ function checkWin() {
     subtitle.style.opacity = 0;
 
     setTimeout(() => {
-      boardContainer.style.display = "none";
-      mainTitle.style.display = "none";
-      piecesTitle.style.display = "none";
-      boardTitle.style.display = "none";
-      piecesContainer.style.display = "none";
-      subtitle.style.display = "none";
+      boardContainer.style.visibility = "hidden";
+      mainTitle.style.visibility = "hidden";
+      // piecesTitle.style.visibility = "hidden";
+      boardTitle.style.visibility = "hidden";
+      piecesContainer.style.visibility = "hidden";
+      subtitle.style.visibility = "hidden";
 
       // Change background
-      document.body.style.backgroundImage = "url('img/fondo_piedra2.webp')";
-      document.body.style.transition = "background-image 2s ease-in-out";
+      document.body.classList.add('fondo-piedra2');
+      
 
       // Display victory message
       const victoryMessage = document.createElement("h1");
@@ -216,6 +428,47 @@ function checkWin() {
         confetti.style.opacity = 1; // Make confetti visible
       }, 100); // Small delay to allow elements to be appended
 
+      sendGameResult(); // Enviar resultado al completar el mapa
+
     }, 2000); // Match the CSS transition duration
   }
+}
+
+function mostrarTransicionMapaCompleto() {
+  // Selecciona todos los elementos principales excepto el body
+  const elementosOcultar = [
+    document.getElementById('main-title'),
+    document.getElementById('subtitle'),
+    document.querySelector('.puzzle-wrapper'),
+  ].filter(Boolean);
+
+   // Desvanece los elementos
+  elementosOcultar.forEach(el => {
+    el.style.transition = 'opacity 1.5s cubic-bezier(.4,0,.2,1)';
+    el.style.opacity = '0';
+  });
+
+  // Espera a que termine el desvanecimiento antes de ocultar y cambiar el fondo
+  setTimeout(() => {
+    elementosOcultar.forEach(el => {
+      el.style.visibility = 'hidden';
+    });
+
+    // Cambia el fondo con transición suave usando la clase CSS
+    document.body.classList.add('fondo-piedra2');
+
+    // Crea el botón "Examinar Mapa" y lo muestra suavemente
+    const btnExaminar = document.createElement('button');
+    btnExaminar.id = 'btn-examinar-mapa';
+    btnExaminar.textContent = 'Examinar Mapa';
+    btnExaminar.className = 'btn-pista-primario btn-primary-gradient';
+    btnExaminar.style.opacity = '0';
+    btnExaminar.style.transition = 'opacity 1.5s cubic-bezier(.4,0,.2,1)';
+    document.body.appendChild(btnExaminar);
+
+    setTimeout(() => {
+      btnExaminar.style.opacity = '1';
+    }, 100); // Pequeño retardo para activar la transición
+
+  }, 1600); // Espera a que termine el fade-out antes de cambiar el fondo y mostrar el botón
 }

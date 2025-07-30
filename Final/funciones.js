@@ -1,5 +1,70 @@
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content Loaded');
+    const escenaFinal = document.getElementById('escena-final');
+    const escenaDiscos = document.getElementById('escena-discos');
+    const btnIrPortal = document.getElementById('btn-ir-portal');
+
+    if (btnIrPortal && escenaFinal && escenaDiscos) {
+        btnIrPortal.addEventListener('click', () => {
+            escenaFinal.classList.remove('visible');
+            escenaFinal.classList.add('oculto');
+            escenaDiscos.classList.remove('oculto');
+            escenaDiscos.classList.add('visible');
+        });
+    }
+
+    // Modales y botones de la esquina
+    const btnPerfil = document.getElementById('btn-perfil');
+    const btnRanking = document.getElementById('btn-ranking');
+    const modalPerfil = document.getElementById('modal-perfil');
+    const modalRanking = document.getElementById('modal-ranking');
+    const cerrarModalPerfil = document.getElementById('cerrar-modal-perfil');
+    const cerrarModalRanking = document.getElementById('cerrar-modal-ranking');
+
+    // Perfil de usuario
+    const formPerfil = document.getElementById('form-perfil');
+    const inputPerfilImg = document.getElementById('input-perfil-img');
+    const perfilImgPreview = document.getElementById('perfil-img-preview');
+    const btnCambiarImg = document.getElementById('btn-cambiar-img');
+
+    // Score y Timer
+    const scoreContainer = document.getElementById('score-container');
+    const timerContainer = document.getElementById('timer-container');
+    const scoreDisplay = document.getElementById('score');
+    const timerDisplay = document.getElementById('timer');
+
+    let currentScore = parseInt(localStorage.getItem('gameScore')) || 400;
+    scoreDisplay.textContent = currentScore;
+
+    function updateScore(points) {
+        currentScore += points;
+        scoreDisplay.textContent = currentScore;
+        localStorage.setItem('gameScore', currentScore);
+    }
+
+    // Funcionalidad de los discos (existente)
     const discos = document.querySelectorAll('.disco');
+
+    // Botones de navegación
+    const btnVolverAtras = document.getElementById('btn-volver-atras');
+    const btnIrAdelante = document.getElementById('btn-ir-adelante');
+
+    if (btnIrAdelante) {
+        btnIrAdelante.addEventListener('click', () => {
+            console.log('btn-ir-adelante clicked');
+            document.getElementById('escena-final').classList.remove('visible');
+            document.getElementById('escena-final').classList.add('oculto');
+            document.getElementById('escena-discos').classList.remove('oculto');
+            document.getElementById('escena-discos').classList.add('visible');
+        });
+    }
+
+    if (btnVolverAtras) {
+        btnVolverAtras.addEventListener('click', () => {
+            history.back();
+        });
+    }
+
     const botonComprobar = document.getElementById('comprobar');
     let angulos = {
         disco1: 0,
@@ -10,6 +75,70 @@ document.addEventListener('DOMContentLoaded', () => {
     const valorDisplay = document.getElementById('valorDisplay');
     const botonObtenerCoordenadas = document.getElementById('obtenerCoordenadas');
 
+    // Abrir y cerrar modales
+    btnPerfil.addEventListener('click', () => {
+        console.log('btn-perfil clicked');
+        modalPerfil.classList.add('visible');
+    });
+
+    cerrarModalPerfil.addEventListener('click', () => {
+        modalPerfil.classList.remove('visible');
+    });
+
+    btnRanking.addEventListener('click', () => {
+        console.log('btn-ranking clicked');
+        modalRanking.classList.add('visible');
+        // Aquí se podría llamar a una función para cargar el ranking
+        cargarRanking();
+    });
+
+    cerrarModalRanking.addEventListener('click', () => {
+        modalRanking.classList.remove('visible');
+    });
+
+    // Funcionalidad del formulario de perfil
+    btnCambiarImg.addEventListener('click', () => {
+        inputPerfilImg.click();
+    });
+
+    inputPerfilImg.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                perfilImgPreview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    formPerfil.addEventListener('submit', (event) => {
+        event.preventDefault();
+        // Aquí se enviaría la información del perfil al servidor
+        alert('Perfil guardado (funcionalidad de guardado no implementada en este ejemplo).');
+        modalPerfil.classList.remove('visible');
+    });
+
+    // Función para cargar el ranking (ejemplo con datos dummy)
+    function cargarRanking() {
+        const tablaRankingBody = document.querySelector('#tabla-ranking tbody');
+        tablaRankingBody.innerHTML = ''; // Limpiar tabla
+
+        const rankingData = [
+            { puesto: 1, jugador: 'Jugador1', puntuacion: 1500 },
+            { puesto: 2, jugador: 'Jugador2', puntuacion: 1200 },
+            { puesto: 3, jugador: 'Jugador3', puntuacion: 1000 },
+        ];
+
+        rankingData.forEach(item => {
+            const row = tablaRankingBody.insertRow();
+            row.insertCell().textContent = item.puesto;
+            row.insertCell().textContent = item.jugador;
+            row.insertCell().textContent = item.puntuacion;
+        });
+    }
+
+    // Funcionalidad de los discos (existente)
     const obtenerValorDisco3 = (angulo) => {
         const valoresDisco3 = {
             15: 1, 45: 2, 75: 3, 105: 4, 135: 5, 165: 6,

@@ -85,20 +85,21 @@ body::before {
     margin-left: 50px;
 }
 
-h1 {
-  color: white;
-  text-align: center; /* Centra el texto del h1 */
-  margin-bottom: 20px;
-  font-size: 2em;
+.right-panel h1 {
+ font-family: "Barriecito";
+  font-size: 40px;
+  font-weight: 700;
+  color: #ffffff;
   z-index: 10;
 }
 
-p {
-  text-align: center;
-  margin-bottom: 15px; /* Aumenta el margen inferior */
-  padding: 0 20px; /* Reduce el padding */
-  font-size: 0.9em; /* Reduce el tamaño de la fuente */
-  font-family: montserrat;
+.right-panel p {
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 650;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  color: #ffffff;
 }
 
 .input-row {
@@ -118,19 +119,87 @@ p {
     color: white;
 }
 
+.code-input.error {
+  border-color: red;
+}
+
+.code-input.wrong-position {
+  border-color: orange;
+}
+
+#feedback-message {
+  color: white;
+  margin-top: 10px;
+  height: 20px; /* Reserve space to prevent layout shifts */
+}
+
+#victory-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000; /* Ensure it's above other content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.8); /* Fallback background */
+}
+
+#victory-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.victory-content {
+  text-align: center;
+  z-index: 1;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+  border-radius: 10px;
+}
+
+.victory-message {
+  font-family: "Barriecito", system-ui; /* Use the same font as h1/h2 */
+  font-size: 3em; /* Adjust size as needed */
+  color: white;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.victory-buttons button {
+  margin: 0 15px;
+  padding: 15px 30px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(45deg, #00f0ff, #00ffbf); /* Example gradient */
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.victory-buttons button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+}
+
 .code-input::-webkit-inner-spin-button,
 .code-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.code-input[type=number] {
-}
-
 .disco-container {
   position: relative;
-  width: 630px; /* Reducido en un 10% */
-  height: 630px; /* Reducido en un 10% */
+  width: 640px; /* Reducido en un 10% */
+  height: 640px; /* Reducido en un 10% */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -159,19 +228,27 @@ p {
 }
 
 #disco2 {
-  width: 50%;
-  height: 50%;
+  width: 47%;
+  height: 47%;
   z-index: 2;
-  background-image: url('img/disco1.webp');
+  background-image: url('img/disco2.webp');
   filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.8));
+  margin-bottom: 4px;
+  margin-right: 2px;
+  
+ 
 }
 
 #disco1 {
-  width: 26.5%;
-  height: 26.5%;
+  width: 33%;
+  height: 33%;
   z-index: 3;
-  background-image: url('img/disco2.webp');
+  background-image: url('img/disco1.webp');
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.7));
+ 
+ 
+  
+  
 }
 
 #comprobar {
@@ -183,8 +260,10 @@ p {
 
 .valor-display {
   position: absolute;
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 6px;
+  margin-right: 4px;
   background-image: url('img/oroPequeño.webp');
   background-size: cover;
   border-radius: 50%;
@@ -197,18 +276,6 @@ p {
   z-index: 100; /* Asegura que esté por encima de todo */
   visibility: hidden; /* Oculto por defecto */
   opacity: 0.7; /* Semitransparente */
-}
-
-#obtenerCoordenadas {
-  display: block;
-  margin-top: 10px; /* Espacio entre discos y botón */
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #4CAF50; /* Color verde */
-  color: white;
-  border: none;
-  border-radius: 5px;
 }
 
 /* Estilos para los nuevos botones de la esquina superior derecha */
@@ -378,6 +445,7 @@ button {
   transition: all 0.4s ease;
   box-shadow: 0 0 10px rgba(107, 107, 107, 0.5);
   font-size: 16px;
+  margin-top: 20px;
 }
 
 button:hover {
@@ -524,10 +592,29 @@ button:hover {
   -webkit-backdrop-filter: blur(7px);
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 40px;
+  padding: 20px;
   color: #f0f0f0;
   max-width: 600px;
   text-align: center;
+}
+
+#obtenerCoordenadas {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  color: white;
+  padding: 11px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.4s ease;
+  font-size: 16px;
+  min-width: 150px;
+  margin-top: 0px;
+}
+
+#obtenerCoordenadas:hover {
+    box-shadow: 0 0 10px #FFD700, 0 0 10px #FFD700;
 }
 
 .pantalla {
@@ -542,6 +629,14 @@ button:hover {
   box-sizing: border-box;
 }
 
+#escena-final h1 {
+  font-family: "Barriecito", system-ui;
+  font-size: 40px;
+  font-weight: 700;
+  color: #f0f0f0;
+  margin-bottom: -10px;
+}
+
 #escena-final {
   background-size: cover;
   background-position: center;
@@ -552,13 +647,50 @@ button:hover {
 }
 
 #escena-final p {
+  font-family: sans-serif;
   font-size: 16px;
   line-height: 26px;
   font-weight: 650;
-  margin-bottom: 40px;
-  color: #f0f0f0;
+  padding: 20px;
+  margin-top: -20px;
+  margin-bottom: 20px;
+  color: #ffffff;
 }
 
 .modal-overlay.visible {
   display: flex !important;
+}
+
+#game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#game-over-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.game-over-content {
+  text-align: center;
+  z-index: 1;
+}
+
+.game-over-content h1 {
+  font-size: 5em;
+  color: white;
+  margin-bottom: 20px;
 }

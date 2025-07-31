@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Disco Cifrado</title>
   <link rel="stylesheet" href="estilos.css" />
+  <link rel="preload" href="img/fondo.webp" as="image" />
+  <link rel="preload" href="img/disco1.webp" as="image" />
+  <link rel="preload" href="img/disco2.webp" as="image" />
+  <link rel="preload" href="img/disco3.webp" as="image" />
 
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Barriecito&family=Barrio&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
@@ -121,24 +125,45 @@
         <div class="disco" id="disco1"></div>
         <div class="valor-display" id="valorDisplay">0</div>
       </div>
-      <button id="obtenerCoordenadas">Obtener coordenadas</button>
+      <button id="obtenerCoordenadas">Obtener Coordenadas</button>
     </div>
     <div class="right-panel">
       <h1>El Astrolabio</h1>
-      <p>LLegó el momento de la verdad, es hora de que averigues las coordenadas del portal que te permitirán abandonar esta isla. Para ello deberás descifrar las claves que has ido encontrando por el camino.</p>
-      <p>Alinéa cada clave y encuentra la coordenada que corresponde a cada una de ellas.</p>
+      <p>Ahora tienes que descifrar las claves formadas por 1 numero, 1 símbolo y 1 letra, que has ido encontrando por el camino.</p>
+      <p>Arrastra cada uno de los discos hasta alinearlo con la flecha en su posición correcta y encuentra la coordenada que corresponde a cada clave. ¡Pero ojo! Deberás introducirlas en el orden correcto</p>
       <div class="input-row">
-        <input type="number" min="0" max="99" class="code-input">
-        <input type="number" min="0" max="99" class="code-input">
-        <input type="number" min="0" max="99" class="code-input">
-        <input type="number" min="0" max="99" class="code-input">
-        <input type="number" min="0" max="99" class="code-input">
-        <input type="number" min="0" max="99" class="code-input">
+        <input type="number" min="0" max="99" class="code-input" id="primero">
+        <input type="number" min="0" max="99" class="code-input" id="segundo">
+        <input type="number" min="0" max="99" class="code-input" id="tercero">
+        <input type="number" min="0" max="99" class="code-input" id="cuarto">
+        <input type="number" min="0" max="99" class="code-input" id="quinto">
+        <input type="number" min="0" max="99" class="code-input" id="sexto">
       </div>
       <button id="comprobar">Comprobar</button>
+      <div id="feedback-message"></div>
     </div>
   </div>
 </section>
+
+  <!-- Pantalla de Victoria -->
+  <section id="victory-screen" class="pantalla oculto">
+    <video id="victory-video" src="../video/portal.mp4" loop autoplay muted></video>
+    <div class="victory-content">
+      <h1 class="victory-message">¡Enhorabuena, has conseguido escapar de la Isla Efímera!</h1>
+      <div class="victory-buttons">
+        <button id="btn-play-again">Jugar otra vez</button>
+        <button id="btn-exit">Salir</button>
+      </div>
+    </div>
+  </section>
+
+  <div id="game-over-overlay" class="oculto">
+    <video id="game-over-video" src="../video/isla.mp4" loop></video>
+    <div class="game-over-content">
+      <h1>Game Over</h1>
+      <button id="btn-restart">Volver a jugar</button>
+    </div>
+  </div>
 
   <script src="funciones.js"></script>
 </body>

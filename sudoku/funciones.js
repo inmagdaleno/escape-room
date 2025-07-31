@@ -307,18 +307,30 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- LÓGICA DEL TEMPORIZADOR ---
-  function startTimer() {
+  '''  function startTimer() {
+    const endTime = localStorage.getItem('endTime');
+    if (!endTime) {
+      // Handle case where timer wasn't started
+      return;
+    }
+
     timerInterval = setInterval(() => {
-      timeLeft--;
-      updateTimerDisplay();
-      if (timeLeft <= 0) {
+      const remainingTime = endTime - Date.now();
+      if (remainingTime <= 0) {
         clearInterval(timerInterval);
-        alert("¡Se acabó el tiempo! Fin del juego.");
-        // Redirigir o reiniciar el juego
-        window.location.href = "../index.html";
+        document.getElementById('game-over-overlay').classList.remove('oculto');
+        document.getElementById('game-over-video').play();
+        return;
       }
+      timeLeft = Math.ceil(remainingTime / 1000);
+      updateTimerDisplay();
     }, 1000);
   }
+
+  document.getElementById('btn-restart').addEventListener('click', () => {
+    localStorage.removeItem('endTime');
+    window.location.href = '../index.html';
+  });'''
 
   function updateTimerDisplay() {
     if (timerDisplay) timerDisplay.textContent = formatTime(timeLeft);

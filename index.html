@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -227,8 +229,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrambleTextPlugin.min.js"></script>
 
   <script src="js/funciones.js"></script>
+  <div id="game-over-overlay" class="oculto">
+    <video id="game-over-video" src="video/isla.mp4" loop></video>
+    <div class="game-over-content">
+      <h1>Game Over</h1>
+      <button id="btn-restart">Volver a jugar</button>
+    </div>
+  </div>
+
   <script src="js/juego.js"></script>
-  <script src="js/pruebas.js"></script>
-  <script src="js/gsap.js"></script>
 </body>
 </html>

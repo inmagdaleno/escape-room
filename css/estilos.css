@@ -487,8 +487,7 @@ button:hover {
 #score-container, #timer-container {
   position: fixed;
   top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 40px;
   background: linear-gradient(45deg, #ff00f0, #00ffbf);
   background-size: 200% 200%;
   animation: animated-gradient 3s ease-in-out infinite;
@@ -656,3 +655,128 @@ button:hover {
   font-family: "Barriecito";
   font-size: 32px;
 }
+
+/* --- Responsive base para móviles en horizontal --- */
+@media (max-width: 900px) and (orientation: landscape), (max-width: 600px) {
+  html, body {
+    font-size: 14px;
+    overflow-x: hidden;
+  }
+
+  .pantalla, section, .contenido, .modal-contenido {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    min-height: 80vh;
+    padding: 0 1vw;
+    margin: 0.5rem 0.5rem;
+    
+  }
+
+  .contenido, .modal-contenido {
+    padding: 1vw 1vw 1vw 1vw;
+    max-width: 100vw;
+    min-width: 0;
+  }
+
+  /* Ajusta los títulos y textos */
+  h1, h2 {
+    font-size: 1rem;
+    text-align: center;
+    word-break: break-word;
+  }
+  p, label, input, button, .feedback {
+    font-size: 0.5rem;
+    word-break: break-word;
+    font-weight: 400;
+    line-height: 24px;
+  }
+
+  /* Botones grandes y cómodos */
+  button, .btn-pista-primario, .btn-pista-secundario, .btn-resolver {
+    font-size: 1rem;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  /* Inputs adaptados */
+  input[type="text"], input[type="number"], input[type="email"] {
+    font-size: 1em;
+    padding: 0.4em 0.8em;
+    border-radius: 8px;
+    width: 90vw;
+    max-width: 350px;
+    margin: 0.5em auto;
+    display: block;
+  }
+
+  /* Modales centrados y adaptados */
+  .modal-contenido {
+    max-width: 100vw;
+    min-width: 0;
+    padding: 2vw 2vw 2vw 2vw;
+    border-radius: 12px;
+  }
+
+  /* Botón de pista extra flotante */
+  .btn-pista-extra-estilo, .btn-pista-extra-estilo-modal1 {
+    width: 48px;
+    height: 48px;
+    font-size: 1rem;
+    bottom: 18px;
+    left: 18px;
+  }
+
+  /* Ajusta imágenes */
+  img, .pergamino-container img, .modal-contenido img {
+    max-width: 50vw;
+    height: auto;
+    display: block;
+    
+  }
+
+  /* Ajusta contenedores de pergamino y puzzles */
+  .pergamino-container, .puzzle-container, .modal-acciones {
+    max-width: 100vw;
+    min-width: 0;
+    padding: 1vw 1vw 1vw 1vw;
+    border-radius: 12px;
+    
+  }
+
+  /* Ajusta feedback y mensajes */
+  .feedback {
+    font-size: 1em;
+    padding: 0.5em 0;
+    text-align: center;
+  }
+
+  /* Ajusta el modal de pista visual */
+  #modal-pista-imagen .modal-contenido img {
+    max-width: 100vw;
+    max-height: 60vh;
+  }
+
+  .esquina-superior-derecha {
+    flex-direction: column;
+  }
+
+  .modal-contenido h2 {
+    font-size: 1.2rem;
+  }
+
+  #perfil-img-preview {
+    width: 80px;
+    height: 80px;
+  }
+
+  #tabla-ranking th, #tabla-ranking td {
+    padding: 8px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+

@@ -1,4 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const gameOverOverlay = document.getElementById('game-over-overlay');
+    const gameOverVideo = document.getElementById('game-over-video');
+    const btnRestart = document.getElementById('btn-restart');
+    const timerDisplay = document.getElementById('timer');
+    let timerInterval;
+
+    function startTimer() {
+        const endTime = localStorage.getItem('endTime');
+        if (!endTime) {
+            // Handle case where timer wasn't started
+            return;
+        }
+
+        timerInterval = setInterval(() => {
+            const remainingTime = endTime - Date.now();
+            if (remainingTime <= 0) {
+                clearInterval(timerInterval);
+                gameOverOverlay.classList.remove('oculto');
+                gameOverVideo.play();
+                return;
+            }
+            const minutes = Math.floor((remainingTime / 1000) / 60);
+            const seconds = Math.floor((remainingTime / 1000) % 60);
+            timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }, 1000);
+    }
+
+    btnRestart.addEventListener('click', () => {
+        localStorage.removeItem('endTime');
+        window.location.href = '../index.html';
+    });
+
+    startTimer();
+
     console.log('DOM Content Loaded');
     const escenaFinal = document.getElementById('escena-final');
     const escenaDiscos = document.getElementById('escena-discos');
@@ -29,9 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Score y Timer
     const scoreContainer = document.getElementById('score-container');
-    const timerContainer = document.getElementById('timer-container');
     const scoreDisplay = document.getElementById('score');
-    const timerDisplay = document.getElementById('timer');
 
     let currentScore = parseInt(localStorage.getItem('gameScore')) || 400;
     scoreDisplay.textContent = currentScore;
@@ -227,11 +259,81 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     botonComprobar.addEventListener('click', () => {
-        const valorDisco3 = obtenerValorDisco3(angulos.disco3);
-        const valorDisco2 = obtenerValorDisco2(angulos.disco2);
-        const valorDisco1 = obtenerValorDisco1(angulos.disco1);
-        const valorFinal = valorDisco1 + valorDisco2 + valorDisco3;
-        alert(`El valor de la combinación es: ${valorFinal}`);
+        const correctAnswers = {
+            primero: "10",
+            segundo: "25",
+            tercero: "26",
+            cuarto: "17",
+            quinto: "5",
+            sexto: "32"
+        };
+
+        const userAnswers = {
+            primero: document.getElementById('primero').value,
+            segundo: document.getElementById('segundo').value,
+            tercero: document.getElementById('tercero').value,
+            cuarto: document.getElementById('cuarto').value,
+            quinto: document.getElementById('quinto').value,
+            sexto: document.getElementById('sexto').value
+        };
+
+        const feedbackMessage = document.getElementById('feedback-message');
+        let allCorrect = true;
+        let wrongPosition = false;
+
+        const correctValues = Object.values(correctAnswers);
+
+        for (const id in userAnswers) {
+            const input = document.getElementById(id);
+            const userAnswer = userAnswers[id];
+
+            input.classList.remove('error', 'wrong-position');
+
+            if (correctAnswers[id] !== userAnswer) {
+                allCorrect = false;
+                if (correctValues.includes(userAnswer)) {
+                    input.classList.add('wrong-position');
+                    wrongPosition = true;
+                } else {
+                    input.classList.add('error');
+                }
+            }
+        }
+
+        if (allCorrect) {
+            const victoryScreen = document.getElementById('victory-screen');
+            const currentScene = document.querySelector('.pantalla.visible');
+            if (currentScene) {
+                currentScene.classList.remove('visible');
+                currentScene.classList.add('oculto');
+            }
+            victoryScreen.classList.remove('oculto');
+            victoryScreen.classList.add('visible');
+            document.getElementById('victory-video').play();
+            localStorage.removeItem('endTime'); // Clear the timer on victory
+
+            // Hide other elements like score/timer containers
+            document.getElementById('score-container').style.display = 'none';
+            document.getElementById('timer-container').style.display = 'none';
+            document.querySelector('.esquina-superior-derecha').style.display = 'none';
+            document.querySelector('.esquina-superior-izquierda').style.display = 'none';
+
+            // Add event listeners for victory buttons
+            document.getElementById('btn-play-again').addEventListener('click', () => {
+                window.location.href = '../index.html';
+            });
+
+            document.getElementById('btn-exit').addEventListener('click', () => {
+                window.close(); // Attempt to close the window
+                // Fallback for browsers that prevent window.close()
+                window.location.href = 'about:blank';
+            });
+
+        } else if (wrongPosition) {
+            feedbackMessage.textContent = 'Algunos números son correctos pero no están en la posición adecuada.';
+        } else {
+            feedbackMessage.textContent = 'Algunos números son incorrectos. Inténtalo de nuevo.';
+        }
     });
 
     botonObtenerCoordenadas.addEventListener('click', () => {

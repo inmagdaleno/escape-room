@@ -144,19 +144,15 @@
 
   
 
-  <script src="funciones.js"></script>
-
-    <!-- Modal Sudoku Resuelto -->
-    <div id="modal-sudoku-resuelto" class="modal-overlay">
-        <div class="modal-content glass-effect">
-            <span class="close-button" id="cerrar-modal-sudoku-resuelto">&times;</span>
-            <h2>¡Enhorabuena!</h2>
-            <p>Has completado correctamente el tablero.<br>Aquí tienes tu recompensa:</p>
-            <img src="img/codigo-sudoku.webp" alt="Código Sudoku" class="modal-image">
-            <button id="btn-continuar-sudoku" class="continue-button">Continuar</button>
-        </div>
+  <div id="game-over-overlay" class="oculto">
+    <video id="game-over-video" src="../video/isla.mp4" loop></video>
+    <div class="game-over-content">
+      <h1>Game Over</h1>
+      <button id="btn-restart">Volver a jugar</button>
     </div>
+  </div>
 
+  <script src="funciones.js"></script>
 </body>
 </html>
 

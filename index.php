@@ -1,4 +1,13 @@
+<?php
+session_start();
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/config/database.php';
 
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: /admin/login.php');
+    exit;
+}
+?>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -36,6 +45,8 @@
     <div class="modal-contenido">
       <span class="cerrar" id="cerrar-modal-perfil">&times;</span>
       <h2>Perfil de Usuario</h2>
+      <span><?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
+
       <form id="form-perfil">
         <div class="perfil-img-container">
           <img id="perfil-img-preview" src="img/avatar.webp" alt="Imagen de perfil">
@@ -236,7 +247,56 @@
       <button id="btn-restart">Volver a jugar</button>
     </div>
   </div>
+<script>
+  // Inicializa el timer solo si no existe
+  if (!localStorage.getItem('endTime')) {
+    const endTime = Date.now() + 30 * 60 * 1000; // 30 minutos en ms
+    localStorage.setItem('endTime', endTime);
+  }
 
-  <script src="js/juego.js"></script>
+  function startTimer() {
+    const timerDisplay = document.getElementById('timer');
+    let timerInterval;
+
+    function updateTimer() {
+      const endTime = parseInt(localStorage.getItem('endTime'), 10);
+      const remainingTime = endTime - Date.now();
+
+      if (remainingTime <= 0) {
+        clearInterval(timerInterval);
+        localStorage.removeItem('endTime');
+        // Muestra Game Over
+        const gameOverOverlay = document.getElementById('game-over-overlay');
+        const gameOverVideo = document.getElementById('game-over-video');
+        if (gameOverOverlay) gameOverOverlay.classList.remove('oculto');
+        if (gameOverVideo) gameOverVideo.play();
+        if (timerDisplay) timerDisplay.textContent = "0:00";
+        return;
+      }
+
+      const minutes = Math.floor((remainingTime / 1000) / 60);
+      const seconds = Math.floor((remainingTime / 1000) % 60);
+      if (timerDisplay) timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    }
+
+    updateTimer();
+    timerInterval = setInterval(updateTimer, 1000);
+  }
+
+  // Llama a startTimer() si existe el display del timer
+  document.addEventListener('DOMContentLoaded', () => {
+    if (document.getElementById('timer')) {
+      startTimer();
+    }
+  });
+
+  // Limpia el timer cuando el usuario gana (llama a esta función cuando corresponda)
+  function clearGameTimer() {
+    localStorage.removeItem('endTime');
+  }
+</script>
+
+<script src="js/funciones.js"></script>
+<script src="js/juego.js"></script>
 </body>
 </html>

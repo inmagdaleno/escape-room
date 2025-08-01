@@ -29,7 +29,7 @@ if(isset($_SESSION['logueado']) && $_SESSION['logueado']) {
 <body class="pantalla-login">
         <div class="container">
         <h2>Login</h2>
-        <form method="post" action="/escaperoom-main/controller/usuarioController.php">
+        <form method="post" action="/escaperoom/controller/usuarioController.php">
             <input type="email" name="email" required placeholder="Correo electrónico">
             <input type="password" name="password" required placeholder="Contraseña">
             <input type="submit" name="login" value="Iniciar Sesión">
@@ -55,7 +55,7 @@ if(isset($_SESSION['logueado']) && $_SESSION['logueado']) {
         <div class="modal-contenido">
             <span class="cerrarRecuperar">&times;</span>
             <h2>Recuperar Contraseña</h2>
-            <form method="POST" action="/escaperoom-main/controller/usuarioController.php">
+            <form method="POST" action="/escaperoom/controller/usuarioController.php">
                 <input type="email" name="email" required placeholder="Correo Electrónico">
                 <input type="submit" name="recuperar" value="Recuperar Contraseña">
             </form>
@@ -66,7 +66,7 @@ if(isset($_SESSION['logueado']) && $_SESSION['logueado']) {
         <div class="modal-contenido">
             <span class="cerrarRegistro">&times;</span>
             <h2>Registro</h2>
-            <form method="POST" action="/escaperoom-main/controller/usuarioController.php">
+            <form method="POST" action="/escaperoom/controller/usuarioController.php">
                 <input type="email" name="email" required placeholder="Correo Electrónico">
                 <input type="password" name="password" required placeholder="Contraseña">
                 <input type="submit" name="registro" value="Registrarse">

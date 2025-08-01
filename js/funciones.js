@@ -105,9 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- FUNCIÓN PARA ENVIAR RESULTADOS DE LA PARTIDA ---
   window.sendGameResult = function() {
     const gameData = {
-      // !!! IMPORTANTE: Reemplaza 1 con el ID real del usuario logueado
-      // Esto debería obtenerse de la sesión del usuario logueado
-      id_usuario: 1, 
       modo_juego: window.gameMode,
       pistas_usadas: window.totalPistasUsadas,
       resultado: 1 // 1 para partida completada
@@ -120,27 +117,25 @@ document.addEventListener("DOMContentLoaded", () => {
       gameData.puntuacion_final = null;
       gameData.tiempo_restante_final = window.timeLeft;
     }
-
-    fetch('controller/guardarPartida.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(gameData),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Respuesta del servidor al guardar partida:', data);
-      if (data.success) {
-        console.log('Partida guardada con éxito.');
-      } else {
-        console.error('Error al guardar partida:', data.mensaje);
-      }
-    })
-    .catch((error) => {
-      console.error('Error en la solicitud de guardar partida:', error);
-    });
+fetch('/controller/guardarPartida.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(gameData),
+})
+.then(response => response.json())
+.then(data => {
+  if (data.success) {
+    // Éxito: puedes mostrar un mensaje o pasar a la siguiente pantalla
+    alert('¡Partida guardada con éxito!');
+  } else {
+    // Error: muestra el mensaje del backend al usuario
+    alert('Error: ' + data.mensaje);
   }
+})
+.catch((error) => {
+  alert('Error de conexión con el servidor.');
+});
+}
 
   // --- GESTIÓN DE MODALES SUPERPUESTOS ---
   let activeGameModal = null;

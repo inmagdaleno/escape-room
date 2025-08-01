@@ -32,7 +32,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['login'])){
 
     if($resultado['success']){
         $_SESSION['usuario'] = $resultado['usuario'];
-        $ruta = '../index.html';
+        $ruta = '../index.php';
     }else{
         $ruta = '../admin/login.php';
     }

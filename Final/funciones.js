@@ -1,174 +1,122 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const gameOverOverlay = document.getElementById('game-over-overlay');
-    const gameOverVideo = document.getElementById('game-over-video');
-    const btnRestart = document.getElementById('btn-restart');
-    const timerDisplay = document.getElementById('timer');
-    let timerInterval;
-
+    // --- TIMER GLOBAL ---
     function startTimer() {
-        const endTime = localStorage.getItem('endTime');
-        if (!endTime) {
-            // Handle case where timer wasn't started
-            return;
-        }
+        const timerDisplay = document.getElementById('timer');
+        const gameOverOverlay = document.getElementById('game-over-overlay');
+        const gameOverVideo = document.getElementById('game-over-video');
+        let timerInterval;
 
-        timerInterval = setInterval(() => {
+        // Inicializa endTime si no existe (30 minutos)
+        if (!localStorage.getItem('endTime')) {
+            const endTime = Date.now() + 30 * 60 * 1000;
+            localStorage.setItem('endTime', endTime);
+        }
+        const endTime = parseInt(localStorage.getItem('endTime'), 10);
+
+        function updateTimer() {
             const remainingTime = endTime - Date.now();
             if (remainingTime <= 0) {
                 clearInterval(timerInterval);
-                gameOverOverlay.classList.remove('oculto');
-                gameOverVideo.play();
+                localStorage.removeItem('endTime');
+                if (gameOverOverlay) gameOverOverlay.classList.remove('oculto');
+                if (gameOverVideo) gameOverVideo.play();
+                if (timerDisplay) timerDisplay.textContent = "0:00";
                 return;
             }
             const minutes = Math.floor((remainingTime / 1000) / 60);
             const seconds = Math.floor((remainingTime / 1000) % 60);
-            timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-        }, 1000);
-    }
-
-    btnRestart.addEventListener('click', () => {
-        localStorage.removeItem('endTime');
-        window.location.href = '../index.html';
-    });
-
-    startTimer();
-
-    console.log('DOM Content Loaded');
-    const escenaFinal = document.getElementById('escena-final');
-    const escenaDiscos = document.getElementById('escena-discos');
-    const btnIrPortal = document.getElementById('btn-ir-portal');
-
-    if (btnIrPortal && escenaFinal && escenaDiscos) {
-        btnIrPortal.addEventListener('click', () => {
-            escenaFinal.classList.remove('visible');
-            escenaFinal.classList.add('oculto');
-            escenaDiscos.classList.remove('oculto');
-            escenaDiscos.classList.add('visible');
-        });
-    }
-
-    // Modales y botones de la esquina
-    const btnPerfil = document.getElementById('btn-perfil');
-    const btnRanking = document.getElementById('btn-ranking');
-    const modalPerfil = document.getElementById('modal-perfil');
-    const modalRanking = document.getElementById('modal-ranking');
-    const cerrarModalPerfil = document.getElementById('cerrar-modal-perfil');
-    const cerrarModalRanking = document.getElementById('cerrar-modal-ranking');
-
-    // Perfil de usuario
-    const formPerfil = document.getElementById('form-perfil');
-    const inputPerfilImg = document.getElementById('input-perfil-img');
-    const perfilImgPreview = document.getElementById('perfil-img-preview');
-    const btnCambiarImg = document.getElementById('btn-cambiar-img');
-
-    // Score y Timer
-    const scoreContainer = document.getElementById('score-container');
-    const scoreDisplay = document.getElementById('score');
-
-    let currentScore = parseInt(localStorage.getItem('gameScore')) || 400;
-    scoreDisplay.textContent = currentScore;
-
-    function updateScore(points) {
-        currentScore += points;
-        scoreDisplay.textContent = currentScore;
-        localStorage.setItem('gameScore', currentScore);
-    }
-
-    // Funcionalidad de los discos (existente)
-    const discos = document.querySelectorAll('.disco');
-
-    // Botones de navegación
-    const btnVolverAtras = document.getElementById('btn-volver-atras');
-    const btnIrAdelante = document.getElementById('btn-ir-adelante');
-
-    if (btnIrAdelante) {
-        btnIrAdelante.addEventListener('click', () => {
-            console.log('btn-ir-adelante clicked');
-            document.getElementById('escena-final').classList.remove('visible');
-            document.getElementById('escena-final').classList.add('oculto');
-            document.getElementById('escena-discos').classList.remove('oculto');
-            document.getElementById('escena-discos').classList.add('visible');
-        });
-    }
-
-    if (btnVolverAtras) {
-        btnVolverAtras.addEventListener('click', () => {
-            history.back();
-        });
-    }
-
-    const botonComprobar = document.getElementById('comprobar');
-    let angulos = {
-        disco1: 0,
-        disco2: 0,
-        disco3: 0
-    };
-    let discoActivo = null;
-    const valorDisplay = document.getElementById('valorDisplay');
-    const botonObtenerCoordenadas = document.getElementById('obtenerCoordenadas');
-
-    // Abrir y cerrar modales
-    btnPerfil.addEventListener('click', () => {
-        console.log('btn-perfil clicked');
-        modalPerfil.classList.add('visible');
-    });
-
-    cerrarModalPerfil.addEventListener('click', () => {
-        modalPerfil.classList.remove('visible');
-    });
-
-    btnRanking.addEventListener('click', () => {
-        console.log('btn-ranking clicked');
-        modalRanking.classList.add('visible');
-        // Aquí se podría llamar a una función para cargar el ranking
-        cargarRanking();
-    });
-
-    cerrarModalRanking.addEventListener('click', () => {
-        modalRanking.classList.remove('visible');
-    });
-
-    // Funcionalidad del formulario de perfil
-    btnCambiarImg.addEventListener('click', () => {
-        inputPerfilImg.click();
-    });
-
-    inputPerfilImg.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                perfilImgPreview.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            if (timerDisplay) timerDisplay.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
         }
-    });
 
-    formPerfil.addEventListener('submit', (event) => {
-        event.preventDefault();
-        // Aquí se enviaría la información del perfil al servidor
-        alert('Perfil guardado (funcionalidad de guardado no implementada en este ejemplo).');
-        modalPerfil.classList.remove('visible');
-    });
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+    }
+    if (document.getElementById('timer')) {
+        startTimer();
+    }
 
-    // Función para cargar el ranking (ejemplo con datos dummy)
-    function cargarRanking() {
-        const tablaRankingBody = document.querySelector('#tabla-ranking tbody');
-        tablaRankingBody.innerHTML = ''; // Limpiar tabla
-
-        const rankingData = [
-            { puesto: 1, jugador: 'Jugador1', puntuacion: 1500 },
-            { puesto: 2, jugador: 'Jugador2', puntuacion: 1200 },
-            { puesto: 3, jugador: 'Jugador3', puntuacion: 1000 },
-        ];
-
-        rankingData.forEach(item => {
-            const row = tablaRankingBody.insertRow();
-            row.insertCell().textContent = item.puesto;
-            row.insertCell().textContent = item.jugador;
-            row.insertCell().textContent = item.puntuacion;
+    // --- ENVIAR PARTIDA ---
+    function enviarPartida(gameData) {
+        fetch('/controller/guardarPartida.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(gameData),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('¡Partida guardada con éxito!');
+                // Aquí puedes redirigir o mostrar pantalla de victoria
+            } else {
+                alert('Error: ' + data.mensaje);
+            }
+        })
+        .catch(() => {
+            alert('Error de conexión con el servidor.');
         });
     }
+
+    // Ejemplo de cómo llamar a enviarPartida cuando el usuario termina la partida:
+    // const gameData = {
+    //     id_prueba: 3,
+    //     modo_juego: 'puntos', // o 'tiempo'
+    //     pistas_usadas: 2,
+    //     resultado: 1, // 1 para éxito, 0 para fallo
+    //     puntuacion_final: 100, // si modo_juego es 'puntos'
+    //     tiempo_restante_final: null // si modo_juego es 'tiempo'
+    // };
+    // enviarPartida(gameData);
+
+    // --- CARGAR RANKING ---
+    function cargarRanking() {
+        fetch('/controller/obtenerRanking.php')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.getElementById('ranking-body');
+                if (!tbody) return;
+                tbody.innerHTML = '';
+                if (data.success && data.ranking) {
+                    // Ranking por puntuación
+                    if (data.ranking.score && data.ranking.score.length > 0) {
+                        data.ranking.score.forEach((item, i) => {
+                            tbody.innerHTML += `<tr>
+                                <td>${i+1}</td>
+                                <td>${item.jugador}</td>
+                                <td>${item.valor} pts</td>
+                            </tr>`;
+                        });
+                    }
+                    // Separador y ranking por tiempo
+                    if (data.ranking.time && data.ranking.time.length > 0) {
+                        tbody.innerHTML += `<tr><td colspan="3" style="text-align:center;font-weight:bold;">--- Ranking por Tiempo ---</td></tr>`;
+                        data.ranking.time.forEach((item, i) => {
+                            tbody.innerHTML += `<tr>
+                                <td>${i+1}</td>
+                                <td>${item.jugador}</td>
+                                <td>${item.valor} s</td>
+                            </tr>`;
+                        });
+                    }
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="3">No hay datos de ranking.</td></tr>`;
+                }
+            })
+            .catch(() => {
+                const tbody = document.getElementById('ranking-body');
+                if (tbody) tbody.innerHTML = `<tr><td colspan="3">Error de conexión al cargar el ranking.</td></tr>`;
+            });
+    }
+
+    // --- EVENTOS DE BOTONES ---
+    const btnRanking = document.getElementById('btn-ranking');
+    const modalRanking = document.getElementById('modal-ranking');
+    if (btnRanking && modalRanking) {
+        btnRanking.addEventListener('click', () => {
+            cargarRanking();
+            modalRanking.classList.add('visible');
+        });
+    }
+
 
     // Funcionalidad de los discos (existente)
     const obtenerValorDisco3 = (angulo) => {
@@ -320,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Add event listeners for victory buttons
             document.getElementById('btn-play-again').addEventListener('click', () => {
-                window.location.href = '../index.html';
+                window.location.href = '../index.php';
             });
 
             document.getElementById('btn-exit').addEventListener('click', () => {
@@ -344,4 +292,23 @@ document.addEventListener('DOMContentLoaded', () => {
         valorDisplay.textContent = valorTotal;
         valorDisplay.style.visibility = 'visible';
     });
+});
+
+fetch('/controller/guardarPartida.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(gameData),
+})
+.then(response => response.json())
+.then(data => {
+  if (data.success) {
+    // Éxito: puedes mostrar un mensaje o pasar a la siguiente pantalla
+    alert('¡Partida guardada con éxito!');
+  } else {
+    // Error: muestra el mensaje del backend al usuario
+    alert('Error: ' + data.mensaje);
+  }
+})
+.catch((error) => {
+  alert('Error de conexión con el servidor.');
 });

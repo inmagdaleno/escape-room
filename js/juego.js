@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- LÓGICA DEL TEMPORIZADOR ---
-  '''  window.startTimer = function() {
+  window.startTimer = function() {
     const endTime = Date.now() + 30 * 60 * 1000;
     localStorage.setItem('endTime', endTime);
 
@@ -105,8 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('btn-restart').addEventListener('click', () => {
     localStorage.removeItem('endTime');
-    window.location.href = '/index.html';
-  });''
+    window.location.href = '/index.php';
+  });
 
   window.updateTimerDisplay = function() {
     if (window.gameMode !== 'time') return;

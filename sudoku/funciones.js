@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
   scoreDisplay = document.getElementById("score");
   timerDisplay = document.getElementById("timer");
   solveButton = document.querySelector('#solveButtonContainer button');
+  
   const groupIrAdelanteDiv = document.getElementById("group-ir-adelante");
 
   renderBoard();
@@ -194,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (timeLeft <= 0) {
         clearInterval(timerInterval);
         alert("¡Se acabó el tiempo! Fin del juego.");
-        window.location.href = "../index.html";
+        window.location.href = "../index.php";
         return;
       }
     }
@@ -307,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- LÓGICA DEL TEMPORIZADOR ---
-  '''  function startTimer() {
+  function startTimer() {
     const endTime = localStorage.getItem('endTime');
     if (!endTime) {
       // Handle case where timer wasn't started
@@ -329,8 +330,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('btn-restart').addEventListener('click', () => {
     localStorage.removeItem('endTime');
-    window.location.href = '../index.html';
-  });'''
+    window.location.href = '../index.php';
+  });
 
   function updateTimerDisplay() {
     if (timerDisplay) timerDisplay.textContent = formatTime(timeLeft);
@@ -345,7 +346,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- FUNCIÓN PARA ENVIAR RESULTADOS DE LA PARTIDA ---
   function sendGameResult() {
     const gameData = {
-      id_usuario: 1, // Asume un ID de usuario fijo o cárgalo de localStorage
       modo_juego: gameMode,
       pistas_usadas: totalPistasUsadas,
       resultado: 1 // 1 para éxito, 0 para fallo
@@ -358,27 +358,25 @@ document.addEventListener("DOMContentLoaded", () => {
       gameData.puntuacion_final = null;
       gameData.tiempo_restante_final = timeLeft;
     }
-
-    fetch('../controller/guardarPartida.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(gameData),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Respuesta del servidor al guardar partida:', data);
-      if (data.success) {
-        console.log('Partida guardada con éxito.');
-      } else {
-        console.error('Error al guardar partida:', data.mensaje);
-      }
-    })
-    .catch((error) => {
-      console.error('Error en la solicitud de guardar partida:', error);
-    });
+fetch('/controller/guardarPartida.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(gameData),
+})
+.then(response => response.json())
+.then(data => {
+  if (data.success) {
+    // Éxito: puedes mostrar un mensaje o pasar a la siguiente pantalla
+    alert('¡Partida guardada con éxito!');
+  } else {
+    // Error: muestra el mensaje del backend al usuario
+    alert('Error: ' + data.mensaje);
   }
+})
+.catch((error) => {
+  alert('Error de conexión con el servidor.');
+});
+}
 
   // --- GESTIÓN DE MODALES SUPERPUESTOS ---
   let activeGameModal = null;
@@ -435,6 +433,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- MODAL DE RANKING ---
+
   const btnRanking = document.getElementById('btn-ranking');
   const modalRanking = document.getElementById('modal-ranking');
   const cerrarModalRanking = document.getElementById('cerrar-modal-ranking');
@@ -444,7 +443,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!tablaRankingBody) return;
       tablaRankingBody.innerHTML = '';
 
-      fetch('../controller/obtenerRanking.php')
+      fetch('/controller/obtenerRanking.php')
           .then(response => response.json())
           .then(data => {
               if (data.success) {
@@ -539,7 +538,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (btnAvanzarSudoku) {
     btnAvanzarSudoku.addEventListener('click', () => {
       // Redirigir a la escena de la jungla
-      window.location.href = "../index.html#escena-jungla"; // Asumiendo que la jungla está en index.html
+      window.location.href = "../index.php#escena-jungla"; 
     });
   }
 
@@ -554,7 +553,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (btnContinuarSudoku) {
     btnContinuarSudoku.addEventListener('click', () => {
-      window.location.href = "../index.html#escena-jungla";
+      window.location.href = "../index.php#escena-jungla";
     });
   }
 
@@ -915,7 +914,7 @@ function handleSolveButton() {
         if (timeLeft <= 0) {
           clearInterval(timerInterval);
           alert("¡Se acabó el tiempo! Fin del juego.");
-          window.location.href = "../index.html";
+          window.location.href = "../index.php";
           return;
         }
       }

@@ -24,7 +24,7 @@
 
 </head>
 <body>
-     <img src="../img/atardecer.jpg" alt="atardecer en la playa">
+     <img src="../img/atardecer.webp" alt="atardecer en la playa">
       <div class="header">
             <div class="user-info">
                 <?php if(isset($_SESSION['usuario'])): ?>

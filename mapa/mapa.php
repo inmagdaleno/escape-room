@@ -1,3 +1,14 @@
+<?php
+session_start();
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/config/database.php';
+ 
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: /admin/login.php');
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,6 +47,7 @@
     <div class="modal-contenido">
       <span class="cerrar" id="cerrar-modal-perfil">&times;</span>
       <h2>Perfil de Usuario</h2>
+      <span><?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
       <form id="form-perfil">
         <div class="perfil-img-container">
           <img id="perfil-img-preview" src="../img/avatar.webp" alt="Imagen de perfil">

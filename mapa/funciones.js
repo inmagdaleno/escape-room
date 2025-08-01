@@ -11,7 +11,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Modales
   const modalPerfil = document.getElementById('modal-perfil');
+  const btnRanking = document.getElementById('btn-ranking');
   const modalRanking = document.getElementById('modal-ranking');
+  const tbody = document.getElementById('ranking-body');
+
+  function cargarRanking() {
+    fetch('/controller/obtenerRanking.php')
+      .then(res => res.json())
+      .then(data => {
+        tbody.innerHTML = '';
+        data.forEach((jugador, i) => {
+          tbody.innerHTML += `<tr>
+            <td>${i+1}</td>
+            <td>${jugador.nombre}</td>
+            <td>${jugador.puntuacion}</td>
+          </tr>`;
+        });
+      });
+  }
+
+  if (btnRanking && modalRanking) {
+    btnRanking.addEventListener('click', () => {
+      cargarRanking();
+      modalRanking.classList.add('visible');
+    });
+  }
+});
 
   // Estado del juego (se asume que se carga de localStorage o similar)
   let gameMode = localStorage.getItem('gameMode') || 'score'; // 'score' o 'time'
@@ -97,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // --- LÓGICA DEL TEMPORIZADOR ---
-  '''  function startTimer() {
+  function startTimer() {
     const endTime = localStorage.getItem('endTime');
     if (!endTime) {
       // Handle case where timer wasn't started
@@ -119,8 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.getElementById('btn-restart').addEventListener('click', () => {
     localStorage.removeItem('endTime');
-    window.location.href = '../index.html';
-  });'''
+    window.location.href = '../index.php';
+  });
 
   function updateTimerDisplay() {
     if (timerDisplay) timerDisplay.textContent = formatTime(timeLeft);
@@ -135,42 +160,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- FUNCIÓN PARA ENVIAR RESULTADOS DE LA PARTIDA ---
   function sendGameResult() {
     const gameData = {
-      id_usuario: 1, // Asume un ID de usuario fijo o cárgalo de localStorage
       modo_juego: gameMode,
       pistas_usadas: 0, // No hay pistas en este puzzle
       resultado: 1 // 1 para éxito, 0 para fallo
     };
 
-    if (gameMode === 'score') {
-      gameData.puntuacion_final = score;
-      gameData.tiempo_restante_final = null;
-    } else if (gameMode === 'time') {
-      gameData.puntuacion_final = null;
-      gameData.tiempo_restante_final = timeLeft;
-    }
-
-    fetch('../controller/guardarPartida.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(gameData),
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Respuesta del servidor al guardar partida:', data);
-      if (data.success) {
-        console.log('Partida guardada con éxito.');
-      } else {
-        console.error('Error al guardar partida:', data.mensaje);
-      }
-    })
-    .catch((error) => {
-      console.error('Error en la solicitud de guardar partida:', error);
-    });
+  fetch('/controller/guardarPartida.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(gameData),
+})
+.then(response => response.json())
+.then(data => {
+  if (data.success) {
+    // Éxito: puedes mostrar un mensaje o pasar a la siguiente pantalla
+    alert('¡Partida guardada con éxito!');
+  } else {
+    // Error: muestra el mensaje del backend al usuario
+    alert('Error: ' + data.mensaje);
   }
+})
+.catch((error) => {
+  alert('Error de conexión con el servidor.');
+});
 
-  let activeGameModal = null;
+let activeGameModal = null;
 
 function openOverlayModal(modal) {
   const gameModals = document.querySelectorAll('.modal-overlay'); // Selecciona todos los modales con esta clase
@@ -231,7 +245,7 @@ function closeOverlayModal(modal) {
       if (!tablaRankingBody) return;
       tablaRankingBody.innerHTML = '';
 
-      fetch('../controller/obtenerRanking.php', {credentials: 'include'})
+      fetch('/controller/obtenerRanking.php', {credentials: 'include'})
           .then(response => response.json())
           .then(data => {
               if (data.success) {
@@ -291,7 +305,6 @@ function closeOverlayModal(modal) {
   });
 
   inicializarJuegoMapa();
-});
 
 let draggedPiece = null;
 
@@ -441,7 +454,7 @@ function checkWin() {
         confetti.style.opacity = 1; // Make confetti visible
       }, 100); // Small delay to allow elements to be appended
 
-      sendGameResult(); // Enviar resultado al completar el mapa
+      sendGameResult(); 
 
     }, 2000); // Match the CSS transition duration
   }
@@ -484,4 +497,4 @@ function mostrarTransicionMapaCompleto() {
     }, 100); // Pequeño retardo para activar la transición
 
   }, 1600); // Espera a que termine el fade-out antes de cambiar el fondo y mostrar el botón
-}
+}};

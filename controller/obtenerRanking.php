@@ -9,23 +9,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $database = new Database();
     $conexion = $database->getConexion();
 
-    // Consulta para obtener el ranking por puntuación (modo_juego = 1)
-    $query_score = "SELECT u.nombre AS jugador, p.puntuacion_final AS valor, 'score' AS modo_juego
+    // Ranking por puntuación
+    $query_score = "SELECT u.nombre AS jugador, p.puntuacion_final AS valor
                     FROM partida p
                     JOIN usuarios u ON p.id_usuario = u.id
-                    WHERE p.modo_juego = 1 AND p.resultado = 1
+                    WHERE p.modo_juego = 'puntos' AND p.resultado = 1
                     ORDER BY p.puntuacion_final DESC, p.fecha_partida ASC
                     LIMIT 10";
 
-    // Consulta para obtener el ranking por tiempo (modo_juego = 0)
-    $query_time = "SELECT u.nombre AS jugador, p.tiempo_restante_final AS valor, 'time' AS modo_juego
+    // Ranking por tiempo
+    $query_time = "SELECT u.nombre AS jugador, p.tiempo_restante_final AS valor
                    FROM partida p
                    JOIN usuarios u ON p.id_usuario = u.id
-                   WHERE p.modo_juego = 0 AND p.resultado = 1
+                   WHERE p.modo_juego = 'tiempo' AND p.resultado = 1
                    ORDER BY p.tiempo_restante_final DESC, p.fecha_partida ASC
                    LIMIT 10";
 
-    $ranking = [];
+    $ranking = ['score' => [], 'time' => []];
 
     // Obtener ranking por puntuación
     $result_score = $conexion->query($query_score);
